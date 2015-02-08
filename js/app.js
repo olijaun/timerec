@@ -20,20 +20,31 @@ window.onload = function() {
             perPageSelect: false
     }});
 
+    //var datepicker = $.fn.datepicker.noConflict(); // return $.fn.datepicker to previously assigned value
+    //$.fn.bootstrapDP = datepicker;                 // give $().bootstrapDP the bootstrap-datepicker functionality
 
-    $( "#datepicker" ).datepicker();
+    $('#timepicker1').timepicker();
 
-    $("#datepicker").datepicker({
-        onSelect: function(dateText) {
-            var day = $("#datepicker").datepicker('getDate').getDate();
-            selectedMonth = $("#datepicker").datepicker('getDate').getMonth() + 1;
-            selectedYear = $("#datepicker").datepicker('getDate').getFullYear();
-        }
-    }).on("change", function() {
-        var day = $("#datepicker").datepicker('getDate').getDate();
-        selectedMonth = $("#datepicker").datepicker('getDate').getMonth() + 1;
-        selectedYear = $("#datepicker").datepicker('getDate').getFullYear();
-    });
+    $('#datepicker').datepicker({
+        format: 'mm/dd/yyyy',
+        startDate: '-3d'
+    })
+
+
+
+    //$( "#datepicker" ).datepicker();
+    //
+    //$("#datepicker").datepicker({
+    //    onSelect: function(dateText) {
+    //        var day = $("#datepicker").datepicker('getDate').getDate();
+    //        selectedMonth = $("#datepicker").datepicker('getDate').getMonth() + 1;
+    //        selectedYear = $("#datepicker").datepicker('getDate').getFullYear();
+    //    }
+    //}).on("change", function() {
+    //    var day = $("#datepicker").datepicker('getDate').getDate();
+    //    selectedMonth = $("#datepicker").datepicker('getDate').getMonth() + 1;
+    //    selectedYear = $("#datepicker").datepicker('getDate').getFullYear();
+    //});
 
 };
 
@@ -44,8 +55,9 @@ function addRecord() {
 
     //$( "#datepicker" ).datepicker().getDay();
     var day = "" + $("#datepicker").datepicker('getDate').getDate();
-
-    var newRecord = {day: day, start: "b", task: "c"};
+    var time = "" + $("#timepicker1").val();
+    var task = "" + $("#task").val();
+    var newRecord = {day: day, start: time, task: task};
     dynatable.settings.dataset.records.push(newRecord);
     //dynatable.records.updateFromJson({records: myRecords});
     //dynatable.records.init();

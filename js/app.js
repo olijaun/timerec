@@ -57,7 +57,7 @@ function addRecord() {
     var day = "" + $("#datepicker").datepicker('getDate').getDate();
     var time = "" + $("#timepicker1").val();
     var task = "" + $("#task").val();
-    var newRecord = {day: day, start: time, task: task};
+    var newRecord = {day: day, start: time, task: '<a href="bla">' + task + '</a>'};
     dynatable.settings.dataset.records.push(newRecord);
     //dynatable.records.updateFromJson({records: myRecords});
     //dynatable.records.init();

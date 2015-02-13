@@ -8,15 +8,17 @@ window.onload = function() {
     'use strict';
 
     console.log('Registering handler ...');
-    var addBtn = document.getElementById('addBtn');
-    addBtn.addEventListener('click', addRecord);
+    //var addBtn = document.getElementById('addBtn');
+    //addBtn.addEventListener('click', addRecord);
 
-    $('#timepicker1').timepicker();
+    //$('#timepicker1').timepicker();
 
-    $('#datepicker').datepicker({
-        format: 'mm/dd/yyyy',
-        startDate: '-3d'
-    });
+    //$('#datepicker').datepicker({
+    //    format: 'mm/dd/yyyy',
+    //    startDate: '-3d'
+    //});
+
+
 
 
     var storageSupport = supports_html5_storage();
@@ -24,7 +26,7 @@ window.onload = function() {
     var taskConfiguration;
 
     if(storageSupport) {
-        if(localStorage.taskConfiguration === null) {
+        if(localStorage.getItem('taskConfiguration') === null || localStorage.getItem('taskConfiguration') === undefined) {
 
             var tasks = {
                 taskConfiguration: [
@@ -34,11 +36,10 @@ window.onload = function() {
             };
 
             var serializedTasks = JSON.stringify(tasks);
-            console.log(serializedTasks);
-            localStorage.taskConfiguration = JSON.stringify(serializedTasks);
+            localStorage.setItem('taskConfiguration', serializedTasks);
         }
 
-        var taskString = localStorage.taskConfiguration;
+        var taskString = localStorage.getItem('taskConfiguration');
         taskConfiguration = JSON.parse(taskString);
     }
 
@@ -46,9 +47,31 @@ window.onload = function() {
 
     for (var index = 0; index < taskList.length; index++) {
         var task = taskList[index];
-        $("#task").append("<option value='" + task.id + "'>" + task.name + "</option>");
+        $("#task-dropdown-menu").append("<li id='" + task.id + "'>" + task.name + "</li>");
         console.log(taskList[index]);
     }
+
+    $(function(){
+
+        $("#task-dropdown-menu").on('click', 'li', function(event){
+            var taskId = event.currentTarget.attributes.id.nodeValue;
+
+            var now = new Date();
+            var hours = '' + now.getHours();
+            var minutes = '' + now.getMinutes();
+
+            if(hours.length === 1) {
+                hours += '0' + hours;
+            }
+            if(minutes.length === 1) {
+                minutes = '0' + minutes;
+            }
+            var timeVal = hours + ":" + minutes;
+
+            recordedTasks.records.push({ taskId: taskId, day: now.getDate(), time: timeVal});
+        });
+
+    });
 };
 
 function loadMonth() {

@@ -7,6 +7,10 @@ var TimerecModel = (function () {
         currentData = {year: undefined, month: undefined, records: []};
     }
 
+    function getData() {
+        return currentData;
+    }
+
     function getTasks() {
         var defaultTasks = [
             {id: "taskA", name: "Task A"},
@@ -56,7 +60,7 @@ var TimerecModel = (function () {
 
     function storeMonthData() {
 
-        if(currentData.year == undefined || currentData.month == undefined) {
+        if(currentData.year === undefined || currentData.month === undefined) {
             return;
         }
 
@@ -70,9 +74,10 @@ var TimerecModel = (function () {
     return {
         init: init,
         getTasks: getTasks,
+        getData: getData,
         loadMonthData: loadMonthData,
         addTaskRecord: addTaskRecord,
         getTaskRecords: loadMonthData,
         storeMonthData: storeMonthData
-    }
+    };
 })();

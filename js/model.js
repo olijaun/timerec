@@ -17,6 +17,21 @@ var TimerecModel = (function () {
             {id: "taskB", name: "Task B"}
         ];
 
+        var dt = {
+            taskA: "taskA",
+            taskB: "taskB"
+        };
+
+        for (var property in dt) {
+            if (dt.hasOwnProperty(property)) {
+                //console.log(property);
+                console.log('---> ' + dt[property]);
+            }
+        }
+        //cosole.log(dt[property]);
+
+        //var map = new Map();
+
         return defaultTasks;
     }
 
@@ -26,7 +41,13 @@ var TimerecModel = (function () {
 
     function addTaskRecord(taskId, day, hour, minute) {
 
+        currentData.records.sort(sortTasksByDay);
+
         currentData.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
+    }
+
+    function sortTasksByDay(taskA, taskB) {
+        return taskA.day - taskB.day;
     }
 
     function loadMonthData(year, month) {
@@ -63,6 +84,8 @@ var TimerecModel = (function () {
         if(currentData.year === undefined || currentData.month === undefined) {
             return;
         }
+
+        currentData.records.sort(sortTasksByDay);
 
         var storageItemName = getStorageItemName(currentData.year, currentData.month);
 

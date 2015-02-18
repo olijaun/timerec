@@ -38,7 +38,7 @@ var TimerecView  = (function () {
 
         var records = data.records;
 
-        for (var index = 0; index < records.length; index++) {
+        for (var index = records.length - 1; index >= 0; index--) {
             console.log(records.length);
             var rec = records[index];
             //$("#task").append("<option value='" + task.id + "'>" + task.name + "</option>");
@@ -50,7 +50,7 @@ var TimerecView  = (function () {
             var cell3 = row.insertCell(2);
             cell1.innerHTML = rec.day;
             cell2.innerHTML = toTimeStr(rec.hour, rec.minute);
-            cell3.innerHTML = rec.taskId;
+            cell3.innerHTML = TimerecModel.getTasks()[rec.taskId];
         }
     }
 

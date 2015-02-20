@@ -38,9 +38,16 @@ var TimerecView  = (function () {
 
         var records = data.records;
 
+        var now = new Date();
+
         for (var index = records.length - 1; index >= 0; index--) {
             console.log(records.length);
             var rec = records[index];
+
+            if(rec.day !== now.getDate()) {
+                break;
+            }
+
             //$("#task").append("<option value='" + task.id + "'>" + task.name + "</option>");
             //console.log(taskList[index]);
 
@@ -50,7 +57,7 @@ var TimerecView  = (function () {
             var cell3 = row.insertCell(2);
             cell1.innerHTML = rec.day;
             cell2.innerHTML = toTimeStr(rec.hour, rec.minute);
-            cell3.innerHTML = TimerecModel.getTasks()[rec.taskId];
+            cell3.innerHTML = TimerecModel.getTasks()[rec.taskId].name;
         }
     }
 
@@ -73,14 +80,17 @@ var TimerecView  = (function () {
         return timeStr;
     }
 
-    function renderTasks(taskList) {
+    function renderTasks(tasks) {
 
         console.log(taskDropdownMenu);
 
-        for (var index = 0; index < taskList.length; index++) {
-            var task = taskList[index];
-            taskDropdownMenu.append("<li id='" + task.id + "'>" + task.name + "</li>");
-            console.log(taskList[index]);
+        for (var property in tasks) {
+            if (tasks.hasOwnProperty(property)) {
+                var task = tasks[property];
+                if(task.selectable) {
+                    taskDropdownMenu.append("<li id='" + property + "'>" + task.name + "</li>");
+                }
+            }
         }
     }
 

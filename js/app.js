@@ -15,4 +15,6 @@ window.onload = function() {
     var data = TimerecModel.getData();
 
     TimerecView.renderTable(data);
+
+    TimerecModel.storeTasks();
 };

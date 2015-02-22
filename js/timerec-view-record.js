@@ -3,11 +3,21 @@ var TimerecView  = (function () {
     var tableBody;
     var taskDropdownMenu;
     var controller;
+    var monthCombobox;
 
     function init() {
 
         taskDropdownMenu = $("#task-dropdown-menu");
         tableBody = $('#taskTable tbody')[0];
+
+        monthCombobox = $('#month-combobox').combobox();
+
+
+        //$('#top-nav').onePageNav({
+        //    currentClass: 'active',
+        //    changeHash: true,
+        //    scrollSpeed: 1200
+        //});
 
         taskDropdownMenu.on('click', 'li', function (event) {
 

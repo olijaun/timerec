@@ -1,4 +1,4 @@
-var TimerecViewEdit  = (function () {
+var TimerecViewEdit = (function () {
 
     var tableBody;
     var taskDropdownMenu;
@@ -39,41 +39,101 @@ var TimerecViewEdit  = (function () {
 
         TimerecModel.loadMonthData(now.getFullYear(), now.getDate());
 
-        yearInputField.blur(function() {
-           console.log('blurrrrrrr');
-        });
+        var displayMonth = function () {
+            console.log('month blurrrrrrr');
+
+            var year = parseInt(yearInputField.val());
+            if (isNaN(year)) {
+                // TODO: error handling
+                //$('task-button').prop('disabled', true);
+                $('.dropdown-toggle').prop('disabled', true);
+                return;
+            }
+            var month = parseInt(monthInput.val());
+            if (isNaN(month)) {
+                // TODO:
+                $('task-button').prop('disabled', true);
+                return;
+            }
+
+            TimerecModel.loadMonthData(year, month);
+            var data = TimerecModel.getData();
+            renderTable(data);
+
+            var day = parseInt(dayInputField.val());
+            if (isNaN(day)) {
+                $('task-button').prop('disabled', true);
+                return;
+            }
+            var hour = parseInt(datetimeTmp[0]);
+            if (isNaN(hour)) {
+                // TODO: error handling
+                return;
+            }
+            var minute = parseInt(datetimeTmp[1]);
+            if(isNaN((minute))) {
+                // TODO:
+                return;
+            }
+        };
+
+        yearInputField.blur(displayMonth);
+
+        monthInput.change(displayMonth);
 
         taskDropdownMenu.on('click', 'li', function (event) {
 
             var taskId = event.currentTarget.attributes.id.value;
 
             var timePickerTime = timePicker.val();
-
+            if (timePickerTime === undefined) {
+                return;
+            }
             var datetimeTmp = timePickerTime.split(':');
-            var day = parseInt(dayInputField.val());
-            var hour = parseInt(datetimeTmp[0]);
-            var minute = parseInt(datetimeTmp[1]);
 
             var year = parseInt(yearInputField.val());
-            if(year === NaN) {
+            if (isNaN(year)) {
                 // TODO: error handling
+                return;
             }
             var month = parseInt(monthInput.val());
+            if (isNaN(month)) {
+                // TODO:
+                return;
+            }
+
+            var day = parseInt(dayInputField.val());
+            if (isNaN(day)) {
+                // TODO: error handling
+                return;
+            }
+            var hour = parseInt(datetimeTmp[0]);
+            if (isNaN(hour)) {
+                // TODO: error handling
+                return;
+            }
+            var minute = parseInt(datetimeTmp[1]);
+            if(isNaN((minute))) {
+                // TODO:
+                return;
+            }
 
             console.log("hour: " + hour);
             console.log("minute: " + minute);
-            //TimerecModel.loadMonthData(year, month);
-            //TimerecModel.addTaskRecord(taskId, day, hour, minute);
-            //TimerecModel.storeMonthData();
-            //var data = TimerecModel.getData();
-            //renderTable(data);
+            console.log("month: " + month);
+            console.log("year: " + year);
+            TimerecModel.loadMonthData(year, month);
+            TimerecModel.addTaskRecord(taskId, day, hour, minute);
+            TimerecModel.storeMonthData();
+            var data = TimerecModel.getData();
+            renderTable(data);
         });
     }
 
     function renderTable(data) {
         //$("#taskTable tbody tr").remove();
 
-        while(tableBody.rows.length > 0) {
+        while (tableBody.rows.length > 0) {
             tableBody.deleteRow(0);
         }
 
@@ -85,7 +145,7 @@ var TimerecViewEdit  = (function () {
             console.log(records.length);
             var rec = records[index];
 
-            if(rec.day !== now.getDate()) {
+            if (rec.day !== now.getDate()) {
                 break;
             }
 
@@ -105,7 +165,7 @@ var TimerecViewEdit  = (function () {
     function toTimeStr(hour, minute) {
         var timeStr = '';
 
-        if(hour < 10) {
+        if (hour < 10) {
             timeStr += '0' + hour;
         } else {
             timeStr += '' + hour;
@@ -113,7 +173,7 @@ var TimerecViewEdit  = (function () {
 
         timeStr += ':';
 
-        if(minute < 10) {
+        if (minute < 10) {
             timeStr += '0' + minute;
         } else {
             timeStr += '' + minute;
@@ -128,7 +188,7 @@ var TimerecViewEdit  = (function () {
         for (var property in tasks) {
             if (tasks.hasOwnProperty(property)) {
                 var task = tasks[property];
-                if(task.selectable) {
+                if (task.selectable) {
                     taskDropdownMenu.append("<li id='" + property + "'>" + task.name + "</li>");
                 }
             }

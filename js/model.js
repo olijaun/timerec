@@ -26,6 +26,10 @@ var TimerecModel = (function () {
         currentData.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
     }
 
+    function removeTaskRecord(index) {
+        currentData.records.splice(index, 1);
+    }
+
     function sortTasksByDay(taskA, taskB) {
         return taskA.day - taskB.day;
     }
@@ -114,6 +118,7 @@ var TimerecModel = (function () {
         getData: getData,
         loadMonthData: loadMonthData,
         addTaskRecord: addTaskRecord,
+        removeTaskRecord: removeTaskRecord,
         getTaskRecords: loadMonthData,
         storeMonthData: storeMonthData,
         loadTasks: loadTasks,

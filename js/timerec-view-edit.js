@@ -18,18 +18,17 @@ var TimerecViewEdit = (function () {
         monthInput = $('#month-input').combobox();
         yearInputField = $('#year-input');
         dayInputField = $('#day-input');
-        timePicker = $('#time-input').timepicker({
+        timePicker = $('#timepicker1').timepicker({
             minuteStep: 1,
             template: 'dropdown',
-            appendWidgetTo: 'body',
+            //appendWidgetTo: 'body',
             showSeconds: false,
             showMeridian: false,
             defaultTime: false,
-            showInputs: false
+            showInputs: true,
+            modalBackdrop: true
         });
         var now = new Date();
-
-
 
         yearInputField.val(now.getFullYear());
         dayInputField.val(now.getDate());
@@ -86,14 +85,44 @@ var TimerecViewEdit = (function () {
             enableButtons();
         });
 
+        $('#modalEdit').on('show.bs.modal', function (event) {
+            //var button = $(event.relatedTarget) // Button that triggered the modal
+            //var recipient = button.data('whatever') // Extract info from data-* attributes
+            //// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            //// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            //var modal = $(this)
+            //modal.find('.modal-title').text('New message to ' + recipient)
+            //modal.find('.modal-body input').val(recipient)
+
+            //timePicker = $('#timepicker1').timepicker({
+            //    minuteStep: 1,
+            //    template: 'dropdown',
+            //    appendWidgetTo: 'body',
+            //    showSeconds: false,
+            //    showMeridian: false,
+            //    defaultTime: false,
+            //    showInputs: false
+            //});
+        });
+
         yearInputField.blur(displayMonth);
 
         monthInput.change(displayMonth);
 
 
-        $('body').on('click','#task-dropdown-menu',function (event) {
+        $('body').on('click','.tp',function (event) {
+            timePicker = $('.tp').timepicker({
+                minuteStep: 1,
+                template: 'dropdown',
+                appendWidgetTo: 'body',
+                showSeconds: false,
+                showMeridian: false,
+                defaultTime: false,
+                showInputs: false
+            });
+        });
 
-        //taskDropdownMenu.on('click', 'li', function (event) {
+        taskDropdownMenu.on('click', 'li', function (event) {
 
             var taskId = event.currentTarget.attributes.id.value;
 
@@ -194,14 +223,6 @@ var TimerecViewEdit = (function () {
 
                 };
             })(index));
-
-
-            $("[data-toggle=popover]").popover({
-                html: true,
-                content: function() {
-                    return $('#popover-content2').html();
-                }
-            });
         }
     }
 

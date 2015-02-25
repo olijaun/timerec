@@ -2,3 +2,6 @@ body {
     padding-top: 60px;
 }
 
+.bootstrap-timepicker {
+    z-index: 1151 !important;
+}

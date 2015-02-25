@@ -94,70 +94,75 @@
             </div>
 
             <div class="panel-body">
-
-                <div id="popover-content2" class="hide">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Day</label>
-
-                            <div class="col-sm-10">
-                                <input id="day-input" type="text" class="form-control" placeholder="Day"
-                                       aria-describedby="basic-addon1">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Time</label>
-
-                            <div class="col-sm-10">
-                                <!--input id="time-input" type="time" class="form-control" placeholder="Time"
-                                       aria-describedby="basic-addon1"-->
-
-                                <!--div class="input-append bootstrap-timepicker">
-                                    <input id="time-input" type="text" class="input-small">
-                                    <span class="add-on"><i class="icon-time"></i></span>
-                                </div-->
-
-                                <!--div class="col-sm-10"> <!-- class="input-append bootstrap-timepicker"-->
-                                <!--input class="span2" id="time-input" size="16" type="text" value="12-02-2012"/-->
-                                <input id="time-input" type="text"> <!-- class="input-small"-->
-                                <span class="glyphicon glyphicon-time"></span>
-                                <!--/div-->
-                            </div>
-                        </div>
-                        <div class="form-group" role="group">
-                            <label class="control-label col-sm-2"></label>
-
-                            <div class="col-sm-10">
-                                <button id="task-button" type="button" class="btn btn-default dropdown-toggle"
-                                        data-toggle="dropdown"
-                                        aria-expanded="false">
-                                    Start Task <span class="caret"></span>
-                                </button>
-                                <ul id="task-dropdown-menu" class="dropdown-menu" role="menu">
-                                </ul>
-                                <button id="stop-button" type="button" class="btn btn-default">Stop</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit"
+                        data-whatever="@mdo">Open modal
+                </button>
             </div>
         </div>
     </div>
 
-    <div id="popover-content" class="hide">
-        <form class="form-inline" role="form">
-            <div class="form-group">
-                <select class="form-control">
-                    <option>CH</option>
-                    <option>RU</option>
-                    <option>EU</option>
-                    <option>SEA</option>
-                </select>
-                <input placeholder="Name" class="form-control" maxlength="5" type="text">
-                <button id='bla' type="submit" class="btn btn-primary">Go To Login »</button>
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
             </div>
-        </form>
+
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Day</label>
+
+                        <div class="col-sm-10">
+                            <input id="day-input" type="text" class="form-control" placeholder="Day"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Time</label>
+
+                        <div class="col-sm-10">
+                            <!--input id="time-input" type="time" class="form-control" placeholder="Time"
+                                   aria-describedby="basic-addon1"-->
+
+                            <!--div class="input-append bootstrap-timepicker">
+                                <input id="time-input" type="text" class="input-small">
+                                <span class="add-on"><i class="icon-time"></i></span>
+                            </div-->
+
+                            <div class="input-append bootstrap-timepicker">
+                                <input id="timepicker1" type="text" class="input-small">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" role="group">
+                        <label class="control-label col-sm-2"></label>
+
+                        <div class="col-sm-10">
+                            <button id="task-button" type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false">
+                                Start Task <span class="caret"></span>
+                            </button>
+                            <ul id="task-dropdown-menu" class="dropdown-menu" role="menu">
+                            </ul>
+                            <button id="stop-button" type="button" class="btn btn-default">Stop</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
     </div>
+    </div>
+
 
     <div class="panel panel-default">
         <!-- Default panel contents -->

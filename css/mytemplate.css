@@ -5,3 +5,13 @@ body {
 .bootstrap-timepicker {
     z-index: 1151 !important;
 }
+
+.bootstrap-timepicker-widget.dropdown-menu.open {
+    display: inline-block;
+    z-index: 1151 !important;
+}
+
+.bootstrap-timepicker-widget.dropdown-menu {
+    padding: 4px;
+    z-index: 1151 !important;
+}

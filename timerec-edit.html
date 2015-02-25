@@ -10,6 +10,7 @@
 
     <title>timerec</title>
 
+
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap-combobox/css/bootstrap-combobox.css" rel="stylesheet">
@@ -56,17 +57,17 @@
             <div class="panel-body">
                 <form class="form-horizontal">
                     <div class="form-group">
+
                         <label class="control-label col-sm-2">Year</label>
 
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input id="year-input" type="number" class="form-control" placeholder="Year"
                                    aria-describedby="basic-addon1">
                         </div>
-                    </div>
-                    <div class="form-group">
+
                         <label class="control-label col-sm-2">Month</label>
 
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <select id="month-input" class="combobox form-control" name="horizontal"
                                     required="required">
                                 <option></option>
@@ -89,78 +90,95 @@
             </div>
         </div>
         <div class="panel panel-primary">
+
             <div class="panel-heading">
                 <h3 class="panel-title">New Task</h3>
             </div>
 
             <div class="panel-body">
+
+            <div class="form-group" role="group">
+                <label class="control-label col-sm-2"></label>
+
+                <div class="col-sm-10">
+                    <button id="task-button" type="button" class="btn btn-default dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-expanded="false">
+                        Start Task <span class="caret"></span>
+                    </button>
+                    <ul id="task-dropdown-menu" class="dropdown-menu" role="menu">
+                    </ul>
+                    <button id="stop-button" type="button" class="btn btn-default">Stop</button>
+                </div>
+            </div>
+
+            <!--div class="panel-body">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit"
                         data-whatever="@mdo">Open modal
                 </button>
-            </div>
+            </div-->
         </div>
     </div>
 
     <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-            </div>
 
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Day</label>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Edit / New</h4>
+                </div>
 
-                        <div class="col-sm-10">
-                            <input id="day-input" type="text" class="form-control" placeholder="Day"
-                                   aria-describedby="basic-addon1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Time</label>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Day</label>
 
-                        <div class="col-sm-10">
-                            <!--input id="time-input" type="time" class="form-control" placeholder="Time"
-                                   aria-describedby="basic-addon1"-->
-
-                            <!--div class="input-append bootstrap-timepicker">
-                                <input id="time-input" type="text" class="input-small">
-                                <span class="add-on"><i class="icon-time"></i></span>
-                            </div-->
-
-                            <div class="input-append bootstrap-timepicker">
-                                <input id="timepicker1" type="text" class="input-small">
-                                <span class="glyphicon glyphicon-time"></span>
+                            <div class="col-sm-10">
+                                <input id="day-input" type="number" class="form-control" placeholder="Day"
+                                       aria-describedby="basic-addon1">
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group" role="group">
-                        <label class="control-label col-sm-2"></label>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Time</label>
 
-                        <div class="col-sm-10">
-                            <button id="task-button" type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown"
-                                    aria-expanded="false">
-                                Start Task <span class="caret"></span>
-                            </button>
-                            <ul id="task-dropdown-menu" class="dropdown-menu" role="menu">
-                            </ul>
-                            <button id="stop-button" type="button" class="btn btn-default">Stop</button>
+                            <div class="col-sm-10">
+                                <!--input id="time-input" type="time" class="form-control" placeholder="Time"
+                                       aria-describedby="basic-addon1"-->
+
+                                <!--div class="input-append bootstrap-timepicker">
+                                    <input id="time-input" type="text" class="input-small">
+                                    <span class="add-on"><i class="icon-time"></i></span>
+                                </div-->
+
+                                <div class="input-append bootstrap-timepicker">
+                                    <input id="timepicker1" type="text" class="input-small">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Task</label>
+
+                            <div class="col-sm-10">
+                                <select id="task-input" class="combobox form-control" name="horizontal"
+                                        required="required">
+
+                                    <option value="1">bla</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="saveButton" type="button" class="btn btn-primary">Save</button>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
 
@@ -200,11 +218,9 @@
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <!--script src="bower_components/jquery-ui/jquery-ui.js"></script-->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script src="bower_components/bootstrap-3-timepicker/js/bootstrap-timepicker.js"></script>
+<!--script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script-->
 <script src="bower_components/bootstrap-combobox/js/bootstrap-combobox.js"></script>
-
-<script src="bower_components/CoolClock/coolclock.js"></script>
+<script src="bower_components/bootstrap-3-timepicker/js/bootstrap-timepicker.js"></script>
 
 <!--script src="bower_components/dynatable/jquery.dynatable.js"></script-->
 <script src="js/model.js"></script>

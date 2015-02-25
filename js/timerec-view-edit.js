@@ -16,6 +16,7 @@ var TimerecViewEdit = (function () {
         tableBody = $('#taskTable tbody')[0];
 
         monthInput = $('#month-input').combobox();
+        monthInput = $('#task-input').combobox();
         yearInputField = $('#year-input');
         dayInputField = $('#day-input');
         timePicker = $('#timepicker1').timepicker({
@@ -213,7 +214,11 @@ var TimerecViewEdit = (function () {
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
             var cell3 = row.insertCell(2);
-            cell1.innerHTML = '<a data-placement="bottom" data-toggle="popover" data-title="Login" data-container="body" type="button" data-html="true" href="#" id="login">' + rec.day + '</a>';
+
+
+
+            cell1.innerHTML = '<a data-toggle="modal" data-target="#modalEdit" data-whatever="@mdo" data-title="Login" data-container="body" type="button" data-html="true" href="#" id="login">' + rec.day + '</a>';
+            //cell1.innerHTML = '<a data-placement="bottom" data-toggle="popover" data-title="Login" data-container="body" type="button" data-html="true" href="#" id="login">' + rec.day + '</a>';
             cell2.innerHTML = toTimeStr(rec.hour, rec.minute);
             cell3.innerHTML = TimerecModel.getTasks()[rec.taskId].name + "&nbsp;<span id='deleteItem" + index + "' class='glyphicon glyphicon-remove'></span>";
             $('#deleteItem' + index).click((function (removeIndex) {

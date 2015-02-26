@@ -104,9 +104,9 @@ var TimerecViewEdit = (function () {
 
         $('#modalEdit').on('show.bs.modal', function (event) {
 
-            var link = $(event.relatedTarget) // element that triggered the modal
+            var link = $(event.relatedTarget); // element that triggered the modal
 
-            editRecordIndex = link.data('recordIndex') // Extract info from data-* attributes
+            editRecordIndex = link.data('recordIndex'); // Extract info from data-* attributes
             //// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             //// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             //var modal = $(this)
@@ -122,14 +122,14 @@ var TimerecViewEdit = (function () {
             if(selectedData.hour < 10) {
                 timeStr = '0' + selectedData.hour;
             } else{
-                timeStr += selectedData.hour
+                timeStr += selectedData.hour;
             }
             timeStr += ":";
 
             if(selectedData.minute < 10) {
                 timeStr += '0' + selectedData.minute;
             } else{
-                timeStr += selectedData.minute
+                timeStr += selectedData.minute;
             }
 
             timePicker.val(timeStr);
@@ -327,18 +327,21 @@ var TimerecViewEdit = (function () {
 
         console.log(taskDropdownMenu);
 
-        for (var property in tasks) {
+        var property;
+        var task;
+
+        for (property in tasks) {
             if (tasks.hasOwnProperty(property)) {
-                var task = tasks[property];
+                task = tasks[property];
                 if (task.selectable) {
                     taskDropdownMenu.append("<li id='" + property + "'>" + task.name + "</li>");
                 }
             }
         }
 
-        for (var property in tasks) {
+        for (property in tasks) {
             if (tasks.hasOwnProperty(property)) {
-                var task = tasks[property];
+                task = tasks[property];
                 if (task.selectable) {
                     taskEditCombo.append("<option value='" + property + "'>" + task.name + "</li>");
                 }

@@ -31,6 +31,9 @@ var TimerecModel = (function () {
     }
 
     function sortTasksByDay(taskA, taskB) {
+        if(taskA.day === taskB.day) {
+            return (taskA.hour * 100 + taskA.minute) - (taskB.hour * 100 + taskB.minute);
+        }
         return taskA.day - taskB.day;
     }
 

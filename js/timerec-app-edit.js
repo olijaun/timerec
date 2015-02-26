@@ -11,10 +11,10 @@ window.onload = function() {
 
     var now = new Date();
 
-    TimerecModel.loadMonthData(now.getFullYear(), now.getMonth());
-    var data = TimerecModel.getData();
+    //TimerecModel.loadMonthData(now.getFullYear(), now.getMonth());
+    //var data = TimerecModel.getData();
 
-    TimerecViewEdit.renderTable(data);
+    //TimerecViewEdit.renderTable(data);
 
-    TimerecModel.storeTasks();
+    //TimerecModel.storeTasks();
 };

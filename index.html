@@ -19,7 +19,7 @@
 
 </head>
 
-<body ng-app="timerecApp" ng-cloak ng-controller="TaskCtrl as vm">
+<body ng-app="timerecApp" ng-cloak>
 
 <div class="navbar-wrapper">
     <div id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -45,7 +45,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" ng-controller="TaskCtrl as vm">
     <div id="record" name="record" class="fullsize">
 
         <div class="panel panel-primary">
@@ -69,7 +69,7 @@
                         <div class="col-sm-4">
                             <select id="month-input" class="combobox form-control" name="horizontal"
                                     required="required" ng-model="vm.selectedMonth"
-                                    ng-options="o.name for o in vm.monthOptions">
+                                    ng-options="o.name for o in vm.monthOptions" ng-change="vm.loadData()">
 
                             </select>
                         </div>
@@ -94,15 +94,69 @@
                                 aria-expanded="false">
                             Start Task <span class="caret"></span>
                         </button>
-                        <ul id="task-dropdown-menu" class="dropdown-menu" role="menu" ng-controller="TaskCtrl as vm">
+                        <ul id="task-dropdown-menu" class="dropdown-menu" role="menu">
                             <li ng-click="vm.startTask(id)" ng-repeat="(id, detail) in vm.tasks" id="{{id}}">
                                 {{detail.name}}
                             </li>
                         </ul>
-                        <button id="stop-button" type="button" class="btn btn-default">Stop</button>
+                        <button ng-click="vm.stopTask()" id="stop-button" type="button" class="btn btn-default">Stop
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div> <!-- ng-controller="ModalDemoCtrl"-->
+            <script type="text/ng-template" id="myModalContent.html" n>
+                <div class="modal-header">
+                    <h3 class="modal-title">New / Edit</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Day</label>
+
+                            <div class="col-sm-10">
+                                <input id="day-input" type="number" class="form-control" placeholder="Day"
+                                       aria-describedby="basic-addon1" ng-model="myday">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Time</label>
+
+                            <div class="col-sm-10">
+                                <!--input id="time-input" type="time" class="form-control" placeholder="Time"
+                                       aria-describedby="basic-addon1"-->
+
+                                <!--div class="input-append bootstrap-timepicker">
+                                    <input id="time-input" type="text" class="input-small">
+                                    <span class="add-on"><i class="icon-time"></i></span>
+                                </div-->
+
+                                <div class="input-append bootstrap-timepicker">
+                                    <input id="timepicker1" type="text" class="input-small">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Task</label>
+
+                            <div class="col-sm-10">
+                                <select id="task-select" class="combobox form-control" name="horizontal"
+                                        required="required">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="saveNewButton" type="button" class="btn btn-default">Save new</button>
+                    <button id="saveButton" type="button" class="btn btn-primary" ng-click="$close()">Save</button>
+                </div>
+            </script>
         </div>
 
         <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -117,58 +171,19 @@
                     </div>
 
                     <div class="modal-body">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">Day</label>
 
-                                <div class="col-sm-10">
-                                    <input id="day-input" type="number" class="form-control" placeholder="Day"
-                                           aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">Time</label>
-
-                                <div class="col-sm-10">
-                                    <!--input id="time-input" type="time" class="form-control" placeholder="Time"
-                                           aria-describedby="basic-addon1"-->
-
-                                    <!--div class="input-append bootstrap-timepicker">
-                                        <input id="time-input" type="text" class="input-small">
-                                        <span class="add-on"><i class="icon-time"></i></span>
-                                    </div-->
-
-                                    <div class="input-append bootstrap-timepicker">
-                                        <input id="timepicker1" type="text" class="input-small">
-                                        <span class="glyphicon glyphicon-time"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">Task</label>
-
-                                <div class="col-sm-10">
-                                    <select id="task-select" class="combobox form-control" name="horizontal"
-                                            required="required">
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="saveNewButton" type="button" class="btn btn-default">Save new</button>
-                        <button id="saveButton" type="button" class="btn btn-primary">Save</button>
+
                     </div>
                 </div>
             </div>
         </div>
 
+
         <div class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading">Task Details</div>
-
             <div class="table-responsive">
 
                 <table id="taskTable" class="table">
@@ -177,13 +192,18 @@
                         <th>Day</th>
                         <th>Start time</th>
                         <th>Task</th>
+                        <th>{{}}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="rec in vm.records">
+                    <tr ng-repeat="rec in vm.records track by $index">
                         <td>{{rec.day}}</td>
                         <td>{{rec.hour}}:{{rec.minute}}</td>
-                        <td>{{rec.taskId}}</td>
+                        <td>{{vm.tasks[rec.taskId].name}}</td>
+                        <td>
+                            <span ng-click="vm.openEditDialog()" class='glyphicon glyphicon-edit'></span>
+                            <span ng-click="vm.deleteRecord($index)" class='glyphicon glyphicon-remove'></span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -203,6 +223,7 @@
 <script src="bower_components/bootstrap-combobox/js/bootstrap-combobox.js"></script>
 <script src="bower_components/bootstrap-3-timepicker/js/bootstrap-timepicker.js"></script>
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="js/app.js"></script>
 <script src="js/services/storageService.js"></script>
 <script src="js/controllers/model.js"></script>

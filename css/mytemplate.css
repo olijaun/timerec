@@ -15,3 +15,6 @@ body {
     padding: 4px;
     z-index: 1151 !important;
 }
+
+/* fix for angular ui bootstrap */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

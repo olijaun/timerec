@@ -19,7 +19,7 @@
 
 </head>
 
-<body ng-app="timerecApp" ng-cloak>
+<body ng-app="timerecApp" ng-cloak ng-controller="TaskCtrl as vm">
 
 <div class="navbar-wrapper">
     <div id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -49,8 +49,8 @@
     <div id="record" name="record" class="fullsize">
 
         <div class="panel panel-primary">
-            <div class="panel-heading" ng-controller="TaskCtrl as vm">
-                <h3 class="panel-title">Month Selection{{ 'hello world ' }}{{property}}</h3>
+            <div class="panel-heading">
+                <h3 class="panel-title">Month Selection</h3>
             </div>
 
             <div class="panel-body">
@@ -61,26 +61,16 @@
 
                         <div class="col-sm-4">
                             <input id="year-input" type="number" class="form-control" placeholder="Year"
-                                   aria-describedby="basic-addon1">
+                                   aria-describedby="basic-addon1" value="{{vm.year}}">
                         </div>
 
                         <label class="control-label col-sm-2">Month</label>
 
                         <div class="col-sm-4">
                             <select id="month-input" class="combobox form-control" name="horizontal"
-                                    required="required">d
-                                <option value="1">January</option>
-                                <option value="2">February</option>
-                                <option value="3">March</option>
-                                <option value="4">April</option>
-                                <option value="5">May</option>
-                                <option value="6">June</option>
-                                <option value="7">July</option>
-                                <option value="8">August</option>
-                                <option value="9">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
+                                    required="required" ng-model="vm.selectedMonth"
+                                    ng-options="o.name for o in vm.monthOptions">
+
                             </select>
                         </div>
                     </div>
@@ -95,112 +85,113 @@
 
             <div class="panel-body">
 
-            <div class="form-group" role="group">
-                <label class="control-label col-sm-2"></label>
+                <div class="form-group" role="group">
+                    <label class="control-label col-sm-2"></label>
 
-                <div class="col-sm-10"> <!--ng-init="ts=vm.tasks()"-->
-                    <button id="task-button" type="button" class="btn btn-default dropdown-toggle"
-                            data-toggle="dropdown"
-                            aria-expanded="false">
-                        Start Task <span class="caret"></span>
-                    </button>
-                    <ul id="task-dropdown-menu" class="dropdown-menu" role="menu" ng-controller="TaskCtrl as vm" >
-                        <li ng-click="vm.startTask(id)" ng-repeat="(id, detail) in vm.tasks" id="{{id}}">hello id:{{id}} name:{{detail.name}}</li>
-                    </ul>
-                    <button id="stop-button" type="button" class="btn btn-default">Stop</button>
+                    <div class="col-sm-10"> <!--ng-init="ts=vm.tasks()"-->
+                        <button id="task-button" type="button" class="btn btn-default dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-expanded="false">
+                            Start Task <span class="caret"></span>
+                        </button>
+                        <ul id="task-dropdown-menu" class="dropdown-menu" role="menu" ng-controller="TaskCtrl as vm">
+                            <li ng-click="vm.startTask(id)" ng-repeat="(id, detail) in vm.tasks" id="{{id}}">
+                                {{detail.name}}
+                            </li>
+                        </ul>
+                        <button id="stop-button" type="button" class="btn btn-default">Stop</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
 
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">Edit / New</h4>
-                </div>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Edit / New</h4>
+                    </div>
 
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Day</label>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Day</label>
 
-                            <div class="col-sm-10">
-                                <input id="day-input" type="number" class="form-control" placeholder="Day"
-                                       aria-describedby="basic-addon1">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Time</label>
-
-                            <div class="col-sm-10">
-                                <!--input id="time-input" type="time" class="form-control" placeholder="Time"
-                                       aria-describedby="basic-addon1"-->
-
-                                <!--div class="input-append bootstrap-timepicker">
-                                    <input id="time-input" type="text" class="input-small">
-                                    <span class="add-on"><i class="icon-time"></i></span>
-                                </div-->
-
-                                <div class="input-append bootstrap-timepicker">
-                                    <input id="timepicker1" type="text" class="input-small">
-                                    <span class="glyphicon glyphicon-time"></span>
+                                <div class="col-sm-10">
+                                    <input id="day-input" type="number" class="form-control" placeholder="Day"
+                                           aria-describedby="basic-addon1">
                                 </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Time</label>
 
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Task</label>
+                                <div class="col-sm-10">
+                                    <!--input id="time-input" type="time" class="form-control" placeholder="Time"
+                                           aria-describedby="basic-addon1"-->
 
-                            <div class="col-sm-10">
-                                <select id="task-select" class="combobox form-control" name="horizontal"
-                                        required="required">
-                                </select>
+                                    <!--div class="input-append bootstrap-timepicker">
+                                        <input id="time-input" type="text" class="input-small">
+                                        <span class="add-on"><i class="icon-time"></i></span>
+                                    </div-->
+
+                                    <div class="input-append bootstrap-timepicker">
+                                        <input id="timepicker1" type="text" class="input-small">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="saveNewButton" type="button" class="btn btn-default">Save new</button>
-                    <button id="saveButton" type="button" class="btn btn-primary">Save</button>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">Task</label>
+
+                                <div class="col-sm-10">
+                                    <select id="task-select" class="combobox form-control" name="horizontal"
+                                            required="required">
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="saveNewButton" type="button" class="btn btn-default">Save new</button>
+                        <button id="saveButton" type="button" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Task Details</div>
 
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">Task Details</div>
+            <div class="table-responsive">
 
-        <div class="table-responsive">
-
-            <table id="taskTable" class="table">
-                <thead>
-                <tr>
-                    <th data-dynatable-column="day">Day</th>
-                    <th data-dynatable-column="start">Start time</th>
-                    <th data-dynatable-column="task">Task</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Za</td>
-                    <td>Zb</td>
-                    <td>Zc</td>
-                </tr>
-                </tbody>
-            </table>
+                <table id="taskTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Start time</th>
+                        <th>Task</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="rec in vm.records">
+                        <td>{{rec.day}}</td>
+                        <td>{{rec.hour}}:{{rec.minute}}</td>
+                        <td>{{rec.taskId}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+
     </div>
-
-
-</div>
 
 </div>
 

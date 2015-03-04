@@ -5,78 +5,69 @@
     timerecApp.factory('StorageService', function () {
 
         return (function () {
-            var currentData;
-            var tasks;
 
-            function init() {
-                loadTasks();
-                currentData = {year: undefined, month: undefined, records: []};
-            }
+            var defaultTasks = {
+                taskA: {name: "My Task 1", selectable: true},
+                taskB: {name: "My Task 2", selectable: true},
+                taskC: {name: "My Task 3", selectable: true},
+                taskD: {name: "Old Task", selectable: false}
+            };
 
-            function getData() {
-                return currentData;
+            function getRecords(year, month) {
+                var storageItemName = getStorageItemNameForRecords(year, month);
+                var records;
+                if (localStorage.getItem(storageItemName) === null || localStorage.getItem(storageItemName) === undefined) {
+                   records = [];
+                } else {
+                    var storedDataString = localStorage.getItem(storageItemName);
+                    records = JSON.parse(storedDataString);
+                }
+                return records;
             }
 
             function getTasks() {
+
+                var storageItemName = getStorageItemNameForTasks();
+                var tasks;
+
+                if (localStorage.getItem(storageItemName) === null || localStorage.getItem(storageItemName) === undefined) {
+                    tasks = defaultTasks;
+                } else {
+                    var storedDataString = localStorage.getItem(storageItemName);
+                    tasks = JSON.parse(storedDataString);
+                }
+
                 return tasks;
             }
 
-            function getTaskRecords(year, month) {
-                loadMonthData(year, month);
+            function storeRecords(year, month, records) {
+
+                if (year === undefined || month === undefined || records === undefined) {
+                    return;
+                }
+
+                records.sort(sortRecordsByDay);
+                var storageItemName = getStorageItemNameForRecords(year, month);
+                var dataString = JSON.stringify(records);
+                localStorage.setItem(storageItemName, dataString);
             }
 
-            function addTaskRecord(taskId, day, hour, minute) {
-                currentData.records.sort(sortTasksByDay);
-                currentData.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
+            function storeTasks(tasks) {
+
+                if (tasks === undefined) {
+                    return;
+                }
+
+                var storageItemName = getStorageItemNameForTasks();
+                var dataString = JSON.stringify(tasks);
+                localStorage.setItem(storageItemName, dataString);
             }
 
-            function removeTaskRecord(index) {
-                currentData.records.splice(index, 1);
-            }
-
-            function sortTasksByDay(taskA, taskB) {
+            function sortRecordsByDay(taskA, taskB) {
                 if (taskA.day === taskB.day) {
                     return (taskA.hour * 100 + taskA.minute) - (taskB.hour * 100 + taskB.minute);
                 }
                 return taskA.day - taskB.day;
-            }
-
-            function loadMonthData(year, month) {
-
-                var storageItemName = getStorageItemNameForRecords(year, month);
-
-                if (localStorage.getItem(storageItemName) === null || localStorage.getItem(storageItemName) === undefined) {
-
-                    var newdata = {year: year, month: month, records: []};
-                    currentData = newdata;
-
-                } else {
-
-                    var storedDataString = localStorage.getItem(storageItemName);
-                    currentData = JSON.parse(storedDataString);
-                }
-            }
-
-            function loadTasks() {
-
-                var storageItemName = getStorageItemNameForTasks();
-
-                if (localStorage.getItem(storageItemName) === null || localStorage.getItem(storageItemName) === undefined) {
-
-                    var defaultTasks = {
-                        taskA: {name: "My Task 1", selectable: true},
-                        taskB: {name: "My Task 2", selectable: true},
-                        taskC: {name: "My Task 3", selectable: true},
-                        taskD: {name: "Old Task", selectable: false}
-                    };
-
-                    tasks = defaultTasks;
-
-                } else {
-
-                    var storedDataString = localStorage.getItem(storageItemName);
-                    tasks = JSON.parse(storedDataString);
-                }
             }
 
             function getStorageItemNameForRecords(year, month) {
@@ -96,43 +87,13 @@
                 return 'timerec.tasks';
             }
 
-            function storeMonthData() {
-
-                if (currentData.year === undefined || currentData.month === undefined) {
-                    return;
-                }
-
-                currentData.records.sort(sortTasksByDay);
-                var storageItemName = getStorageItemNameForRecords(currentData.year, currentData.month);
-                var dataString = JSON.stringify(currentData);
-                localStorage.setItem(storageItemName, dataString);
-            }
-
-            function storeTasks() {
-
-                if (tasks === undefined) {
-                    return;
-                }
-
-                var storageItemName = getStorageItemNameForTasks();
-                var dataString = JSON.stringify(tasks);
-                localStorage.setItem(storageItemName, dataString);
-            }
-
             return {
                 theNumber: 37,
-                init: init,
                 getTasks: getTasks,
-                getData: getData,
-                loadMonthData: loadMonthData,
-                addTaskRecord: addTaskRecord,
-                removeTaskRecord: removeTaskRecord,
-                getTaskRecords: loadMonthData,
-                storeMonthData: storeMonthData,
-                loadTasks: loadTasks,
+                getRecords: getRecords,
+                storeRecords: storeRecords,
                 storeTasks: storeTasks
             };
         })();
     });
-
 })();

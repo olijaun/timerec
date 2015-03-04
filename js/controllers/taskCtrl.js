@@ -2,41 +2,52 @@
 
     var timerecApp = angular.module("timerecApp");
 
-    timerecApp.controller('TaskCtrl', ['StorageService', '$scope', function(StorageService, $scope) {
+    timerecApp.controller('TaskCtrl', ['StorageService', '$scope', function (StorageService, $scope) {
 
         $scope.property = StorageService.theNumber;
 
         var vm = this;
 
-        vm.rating = {};
-        vm.ratings = [
-            {name: 'Will Hunting', grade: 3.50, entered: "2013-08-05"}
+        vm.year = new Date().getFullYear();
+        vm.month = new Date().getMonth() + 1;
+
+        vm.monthOptions = [
+            {name: "January", id: 1},
+            {name: "February", id: 2},
+            {name: "March", id: 3},
+            {name: "April", id: 4},
+            {name: "May", id: 5},
+            {name: "June", id: 6},
+            {name: "July", id: 7},
+            {name: "August", id: 8},
+            {name: "September", id: 9},
+            {name: "October", id: 10},
+            {name: "November", id: 11},
+            {name: "December", id: 12}
         ];
+        vm.selectedMonth = vm.monthOptions[vm.month - 1];
 
-        vm.addRating = function () {
-            vm.ratings.push({name: vm.rating.name, grade: vm.rating.grade, entered: new Date()});
-            //vm.ratings.push(vm.rating);
-            vm.rating = {};
-        };
-
-        vm.removeRating = function (item) {
-            if (confirm("Remove this rating. Sure?")) {
-                vm.ratings.splice(vm.ratings.indexOf(item), 1);
-            }
-        };
-
-        vm.pluralizer = {
-            0: "No rating!",
-            1: "Only one rating!",
-            other: "{} ratings."
-        };
-
-        //vm.tasks = { a: { name: "AAA name" }, b: {name: "BBB name"} }; //StorageService.getTasks();
-        vm.tasks = function() {
-            StorageService.loadTasks();
-            var ts =  StorageService.getTasks();
+        vm.tasks = function () {
+            var ts = StorageService.getTasks();
             return ts;
         }();
+        vm.records = function () {
+            var ts = StorageService.getRecords(vm.year, vm.month);
+            return ts;
+        }();
+
+        vm.startTask = function(taskId) {
+            var now = new Date();
+            var day = now.getDate();
+            var hour = now.getHours();
+            var minute = now.getMinutes();
+
+            vm.records = {};
+            //vm.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
+            //StorageService.storeRecords(vm.year, vm.selectedMonth.id, vm.records);
+
+            //vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
+        };
 
     }]);
 

@@ -95,7 +95,7 @@
 
     }]);
 
-    timerecApp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    timerecApp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', function ($scope, $modalInstance, items) {
 
         $scope.items = items;
         $scope.selected = {

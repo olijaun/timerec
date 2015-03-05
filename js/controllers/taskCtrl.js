@@ -4,14 +4,12 @@
 
     timerecApp.controller('TaskCtrl', ['StorageService', '$scope', '$modal', function (StorageService, $scope, $modal) {
 
-        $scope.property = StorageService.theNumber;
-
         var vm = this;
 
-        vm.year = new Date().getFullYear();
-        vm.month = new Date().getMonth() + 1;
-
-        vm.myday = undefined;
+        var now = new Date();
+        vm.year = now.getFullYear();
+        vm.month = now.getMonth() + 1;
+        vm.day = now.getDate();
 
         vm.monthOptions = [
             {name: "January", id: 1},
@@ -40,16 +38,22 @@
             return ts;
         }();
 
+        vm.addTask = function (taskId, day, hour, minute) {
+            var now = new Date();
+
+            vm.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
+            StorageService.storeRecords(vm.year, vm.selectedMonth.id, vm.records);
+
+            vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
+        };
+
         vm.startTask = function (taskId) {
             var now = new Date();
             var day = now.getDate();
             var hour = now.getHours();
             var minute = now.getMinutes();
 
-            vm.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
-            StorageService.storeRecords(vm.year, vm.selectedMonth.id, vm.records);
-
-            vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
+            vm.addTask(taskId, day, hour, minute);
         };
 
         vm.stopTask = function () {
@@ -72,12 +76,12 @@
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 controllerAs: 'vm',
-                size: size
-                //resolve: {
-                //    items: function () {
-                //        return $scope.items;
-                //    }
-                //}
+                size: size,
+                resolve: {
+                    parent: function() {
+                        return vm;
+                    }
+                }
             });
 
             modalInstance.result.then(function (selectedItem) {
@@ -85,7 +89,7 @@
                 //console.log('day: ' + vm.myday);
                 //$scope.selected = selectedItem;
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+                //$log.info('Modal dismissed at: ' + new Date());
             });
         };
 
@@ -96,18 +100,29 @@
 
     }]);
 
-    timerecApp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    timerecApp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'parent', function ($scope, $modalInstance, parent) {
 
         var vm = this;
 
-        vm.myday = '' + new Date().getDate();
+        vm.myday = parent.day;
+        vm.parent = parent;
 
-        $scope.ok = function () {
-            //$modalInstance.close($scope.selected.item);
+        vm.selectedTask = undefined;
+        vm.startTime = new Date();
+
+        vm.save = function () {
+            parent.startTask('stop');
+            $modalInstance.dismiss('cancel');
         };
 
-        $scope.cancel = function () {
-            //$modalInstance.dismiss('cancel');
+        vm.add = function () {
+            vm.addTask('stop');
+            $modalInstance.dismiss('cancel');
+        };
+
+        vm.cancel = function () {
+            console.log('selected task: ' + vm.parent.tasks[vm.selectedTask].name);
+            $modalInstance.dismiss('cancel');
         };
     }]);
 })();

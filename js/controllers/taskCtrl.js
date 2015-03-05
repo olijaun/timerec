@@ -71,6 +71,7 @@
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
+                controllerAs: 'vm',
                 size: size
                 //resolve: {
                 //    items: function () {
@@ -81,8 +82,8 @@
 
             modalInstance.result.then(function (selectedItem) {
                 console.log('result: ' + selectedItem);
-                console.log('day: ' + vm.myday);
-                $scope.selected = selectedItem;
+                //console.log('day: ' + vm.myday);
+                //$scope.selected = selectedItem;
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
             });
@@ -95,21 +96,18 @@
 
     }]);
 
-    timerecApp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', function ($scope, $modalInstance, items) {
+    timerecApp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
-        $scope.items = items;
-        $scope.selected = {
-            item: $scope.items[0]
-        };
+        var vm = this;
+
+        vm.myday = '' + new Date().getDate();
 
         $scope.ok = function () {
-            $modalInstance.close($scope.selected.item);
+            //$modalInstance.close($scope.selected.item);
         };
 
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            //$modalInstance.dismiss('cancel');
         };
     }]);
-
-
 })();

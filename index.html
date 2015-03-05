@@ -107,7 +107,7 @@
         </div>
 
         <div> <!-- ng-controller="ModalDemoCtrl"-->
-            <script type="text/ng-template" id="myModalContent.html" n>
+            <script type="text/ng-template" id="myModalContent.html">
                 <div class="modal-header">
                     <h3 class="modal-title">New / Edit</h3>
                 </div>
@@ -118,7 +118,7 @@
 
                             <div class="col-sm-10">
                                 <input id="day-input" type="number" class="form-control" placeholder="Day"
-                                       aria-describedby="basic-addon1" ng-model="myday">
+                                       aria-describedby="basic-addon1" value="{{vm.myday}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -154,12 +154,12 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button id="saveNewButton" type="button" class="btn btn-default">Save new</button>
-                    <button id="saveButton" type="button" class="btn btn-primary" ng-click="$close()">Save</button>
+                    <button id="saveButton" type="button" class="btn btn-primary" ng-click="$close([myday, myday])">Save</button>
                 </div>
             </script>
         </div>
 
-        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <!--div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
 
             <div class="modal-dialog">
@@ -178,7 +178,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
 
 
         <div class="panel panel-default">

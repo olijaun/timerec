@@ -2,7 +2,7 @@
 
     var timerecApp = angular.module("timerecApp");
 
-    timerecApp.controller('TaskCtrl', ['StorageService', '$scope', '$modal', function (StorageService, $scope, $modal) {
+    timerecApp.controller('RecordsCtrl', ['StorageService', '$scope', '$modal', function (StorageService, $scope, $modal) {
 
         var vm = this;
 
@@ -82,7 +82,7 @@
         vm.openEditDialog = function (index) {
 
             var modalInstance = $modal.open({
-                templateUrl: 'myModalContent.html',
+                templateUrl: 'editRecordModal.html',
                 controller: 'ModalInstanceCtrl',
                 controllerAs: 'vm',
                 //size: size,

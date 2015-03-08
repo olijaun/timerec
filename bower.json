@@ -12,7 +12,8 @@
     "bootstrap-combobox": "~1.1.6",
     "bootstrap-3-timepicker": "~0.2.8",
     "angular": "1.2.16",
-    "angular-bootstrap": "~0.12.1"
+    "angular-bootstrap": "~0.12.1",
+    "angular-ui-router": "~0.2.13"
   },
   "authors": [
     "Oliver Jaun"

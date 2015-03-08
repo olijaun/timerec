@@ -36,169 +36,16 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="timerec-record.html">Record</a></li>
-                    <li class="active"><a href="index.html">Edit</a></li>
-                    <li><a href="#report">Report</a></li>
+                    <li ui-sref-active="active"><a ui-sref="records">Records</a></li>
+                    <li ui-sref-active="active"><a ui-sref="tasks">Taks</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container" ng-controller="TaskCtrl as vm">
-    <div id="record" name="record" class="fullsize">
-
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Month Selection</h3>
-            </div>
-
-            <div class="panel-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-
-                        <label class="control-label col-sm-2">Year</label>
-
-                        <div class="col-sm-4">
-                            <input id="year-input" type="number" class="form-control" placeholder="Year"
-                                   aria-describedby="basic-addon1" value="{{vm.year}}">
-                        </div>
-
-                        <label class="control-label col-sm-2">Month</label>
-
-                        <div class="col-sm-4">
-                            <select id="month-input" class="combobox form-control" name="horizontal"
-                                    required="required" ng-model="vm.selectedMonth"
-                                    ng-options="o.name for o in vm.monthOptions" ng-change="vm.loadData()">
-
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="panel panel-primary">
-
-            <div class="panel-heading">
-                <h3 class="panel-title">New Task</h3>
-            </div>
-
-            <div class="panel-body">
-
-                <div class="form-group" role="group">
-                    <label class="control-label col-sm-2"></label>
-
-                    <div class="col-sm-10"> <!--ng-init="ts=vm.tasks()"-->
-                        <!--button id="task-button" type="button" class="btn btn-default dropdown-toggle"
-                                data-toggle="dropdown"
-                                aria-expanded="false">
-                            Start Task <span class="caret"></span>
-                        </button>
-                        <ul id="task-dropdown-menu" class="dropdown-menu" role="menu">
-                            <li ng-click="vm.startTask(id)" ng-repeat="(id, detail) in vm.tasks" id="{{id}}">
-                                {{detail.name}}
-                            </li>
-                        </ul-->
-                        <button ng-click="vm.openEditDialog(-1)" id="add-button" type="button" class="btn btn-default">Add
-                        </button>
-                        <button ng-click="vm.stopTask()" id="stop-button" type="button" class="btn btn-default">Stop
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div> <!-- ng-controller="ModalDemoCtrl"-->
-            <script type="text/ng-template" id="myModalContent.html">
-                <div class="modal-header">
-                    <h3 class="modal-title">
-                        <div ng-hide="{{vm.editMode}}">New</div>
-                        <div ng-show="{{vm.editMode}}">Edit</div>
-                    </h3>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Day</label>
-
-                            <div class="col-sm-10">
-                                <input id="day-input" type="number" class="form-control" placeholder="Day"
-                                       aria-describedby="basic-addon1" value="{{vm.day}}" ng-model="vm.day">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Time</label>
-
-                            <div class="col-sm-10">
-                                <!--input id="time-input" type="time" class="form-control" placeholder="Time"
-                                       aria-describedby="basic-addon1"-->
-
-                                <!--div class="input-append bootstrap-timepicker">
-                                    <input id="time-input" type="text" class="input-small">
-                                    <span class="add-on"><i class="icon-time"></i></span>
-                                </div-->
-
-                                <!--div class="input-append bootstrap-timepicker">
-                                    <input id="timepicker1" type="text" class="input-small" value="{{vm.time}}">
-                                    <span class="glyphicon glyphicon-time"></span>
-                                </div-->
-
-
-                                <timepicker ng-model="vm.startTime" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Task</label>
-                            <div class="col-sm-10">
-                                <select id="task-select" ng-model="vm.selectedTask" class="combobox form-control" name="horizontal"
-                                        required="required" ng-options="taskId as task.name for (taskId,task) in vm.parent.tasks">
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">Close</button>
-                    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="{{vm.editMode}}">Add</button>
-                    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="{{vm.editMode}}">Save</button>
-                </div>
-            </script>
-        </div>
-
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading">Task Details</div>
-            <div class="table-responsive">
-
-                <table id="taskTable" class="table">
-                    <thead>
-                    <tr>
-                        <th>Day</th>
-                        <th>Start time</th>
-                        <th>Task</th>
-                        <th>{{}}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="rec in vm.records track by $index">
-                        <td>{{rec.day}}</td>
-                        <td>{{rec.hour | prependZero}}:{{rec.minute | prependZero}}</td>
-                        <td>{{vm.tasks[rec.taskId].name}}</td>
-                        <td>
-                            <span ng-click="vm.openEditDialog($index)" class='glyphicon glyphicon-edit'></span>
-                            <span ng-click="vm.deleteRecord($index)" class='glyphicon glyphicon-remove'></span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
-    </div>
-
+<div class="container" style="...">
+    <div ui-view></div>
 </div>
 
 <!-- Bootstrap core JavaScript
@@ -210,13 +57,15 @@
 <script src="bower_components/bootstrap-3-timepicker/js/bootstrap-timepicker.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+<script src="js/app.module.js"></script>
 <script src="js/app.js"></script>
 <script src="js/services/storageService.js"></script>
 <script src="js/services/recordService.js"></script>
 <script src="js/controllers/model.js"></script>
-<script src="js/controllers/taskCtrl.js"></script>
-<!--script src="js/timerec-view-edit.js"></script>
-<script src="js/timerec-app-edit.js"></script-->
+<script src="js/controllers/recordsCtrl.js"></script>
+<script src="js/controllers/tasksCtrl.js"></script>
 
 </body>
 </html>

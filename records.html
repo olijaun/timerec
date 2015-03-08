@@ -1,0 +1,87 @@
+<div>
+    <div id="record" name="record" class="fullsize">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Month Selection</h3>
+            </div>
+
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+
+                        <label class="control-label col-sm-2">Year</label>
+
+                        <div class="col-sm-4">
+                            <input id="year-input" type="number" class="form-control" placeholder="Year"
+                                   aria-describedby="basic-addon1" value="{{vm.year}}">
+                        </div>
+
+                        <label class="control-label col-sm-2">Month</label>
+
+                        <div class="col-sm-4">
+                            <select id="month-input" class="combobox form-control" name="horizontal"
+                                    required="required" ng-model="vm.selectedMonth"
+                                    ng-options="o.name for o in vm.monthOptions" ng-change="vm.loadData()">
+
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">New Task</h3>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="form-group" role="group">
+                    <label class="control-label col-sm-2"></label>
+
+                    <div class="col-sm-10">
+                        <button ng-click="vm.openEditDialog(-1)" id="add-button" type="button" class="btn btn-default">
+                            Add
+                        </button>
+                        <button ng-click="vm.stopTask()" id="stop-button" type="button" class="btn btn-default">Stop
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div-->
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Records</div>
+            <button ng-click="vm.openEditDialog(-1)" id="add-button" type="button" class="btn btn-default">
+                Add
+            </button>
+            <div class="table-responsive">
+
+                <table id="taskTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Start time</th>
+                        <th>Task</th>
+                        <th>{{}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="rec in vm.records track by $index">
+                        <td>{{rec.day}}</td>
+                        <td>{{rec.hour | prependZero}}:{{rec.minute | prependZero}}</td>
+                        <td>{{vm.tasks[rec.taskId].name}}</td>
+                        <td>
+                            <span ng-click="vm.openEditDialog($index)" class='glyphicon glyphicon-edit'></span>
+                            <span ng-click="vm.deleteRecord($index)" class='glyphicon glyphicon-remove'></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

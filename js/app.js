@@ -1,8 +1,25 @@
 (function () {
 
-    var timerecApp = angular.module("timerecApp", ['ui.bootstrap']);
+    timimrecApp = angular.module('timerecApp');
 
-    angular.module('timerecApp').filter('prependZero', function () {
+    timimrecApp.config(function ($stateProvider, $urlRouterProvider) {
+
+        $urlRouterProvider.otherwise('/ratings');
+
+        $stateProvider
+            .state('records', {
+                url: '/records',
+                templateUrl: 'records.html',
+                controller: 'RecordsCtrl as vm'
+            })
+            .state('tasks', {
+                url: '/tasks',
+                templateUrl: 'tasks.html',
+                controller: 'TasksCtrl as vm'
+            });
+    });
+
+    timimrecApp.filter('prependZero', function () {
         return function (input) {
 
             var text = '' + input;

@@ -47,6 +47,15 @@
             vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
         };
 
+        vm.updateTask = function (index, taskId, day, hour, minute) {
+            var now = new Date();
+
+            vm.records[index] = {taskId: taskId, day: day, hour: hour, minute: minute};
+            StorageService.storeRecords(vm.year, vm.selectedMonth.id, vm.records);
+
+            vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
+        };
+
         vm.startTask = function (taskId) {
             var now = new Date();
             var day = now.getDate();
@@ -70,16 +79,19 @@
             vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
         }
 
-        vm.openEditDialog = function (size) {
+        vm.openEditDialog = function (index) {
 
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 controllerAs: 'vm',
-                size: size,
+                //size: size,
                 resolve: {
-                    parent: function() {
+                    parent: function () {
                         return vm;
+                    },
+                    index: function () {
+                        return index;
                     }
                 }
             });
@@ -100,28 +112,43 @@
 
     }]);
 
-    timerecApp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'parent', function ($scope, $modalInstance, parent) {
+    timerecApp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'parent', 'index', function ($scope, $modalInstance, parent, index) {
 
         var vm = this;
-
-        vm.myday = parent.day;
         vm.parent = parent;
+        vm.index = index;
 
-        vm.selectedTask = undefined;
-        vm.startTime = new Date();
+        vm.editMode = vm.index >= 0;
+
+        if (vm.editMode) {
+            vm.selectedTask = parent.records[vm.index].taskId;
+            vm.day = parent.records[vm.index].day;
+            vm.startTime = new Date(parseInt(vm.parent.year), parseInt(vm.parent.selectedMonth.id) - 1,
+                parseInt(vm.parent.records[vm.index].day), parseInt(vm.parent.records[vm.index].hour), parseInt(vm.parent.records[vm.index].minute));
+        } else {
+            var now = new Date();
+            vm.startTime = new Date(parseInt(vm.parent.year), parseInt(vm.parent.selectedMonth.id) - 1);
+
+            if (now.getFullYear() === vm.startTime.getFullYear() && now.getMonth() === vm.startTime.getMonth()) {
+                vm.startTime.setHours(now.getHours());
+                vm.startTime.setMinutes(now.getMinutes());
+                vm.day = new Date().getDate();
+            }
+            vm.selectedTask = null;
+        }
 
         vm.save = function () {
-            parent.startTask('stop');
+            vm.parent.updateTask(vm.index, vm.selectedTask, vm.day, vm.startTime.getHours(), vm.startTime.getMinutes());
             $modalInstance.dismiss('cancel');
         };
 
         vm.add = function () {
-            vm.addTask('stop');
+            vm.parent.addTask(vm.selectedTask, vm.day, vm.startTime.getHours(), vm.startTime.getMinutes());
             $modalInstance.dismiss('cancel');
         };
 
         vm.cancel = function () {
-            console.log('selected task: ' + vm.parent.tasks[vm.selectedTask].name);
+            console.log('selected task: ' + vm.parent.tasks[vm.selectedTask]);
             $modalInstance.dismiss('cancel');
         };
     }]);

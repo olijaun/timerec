@@ -89,7 +89,7 @@
                     <label class="control-label col-sm-2"></label>
 
                     <div class="col-sm-10"> <!--ng-init="ts=vm.tasks()"-->
-                        <button id="task-button" type="button" class="btn btn-default dropdown-toggle"
+                        <!--button id="task-button" type="button" class="btn btn-default dropdown-toggle"
                                 data-toggle="dropdown"
                                 aria-expanded="false">
                             Start Task <span class="caret"></span>
@@ -98,7 +98,9 @@
                             <li ng-click="vm.startTask(id)" ng-repeat="(id, detail) in vm.tasks" id="{{id}}">
                                 {{detail.name}}
                             </li>
-                        </ul>
+                        </ul-->
+                        <button ng-click="vm.openEditDialog(-1)" id="add-button" type="button" class="btn btn-default">Add
+                        </button>
                         <button ng-click="vm.stopTask()" id="stop-button" type="button" class="btn btn-default">Stop
                         </button>
                     </div>
@@ -109,7 +111,10 @@
         <div> <!-- ng-controller="ModalDemoCtrl"-->
             <script type="text/ng-template" id="myModalContent.html">
                 <div class="modal-header">
-                    <h3 class="modal-title">New / Edit</h3>
+                    <h3 class="modal-title">
+                        <div ng-hide="{{vm.editMode}}">New</div>
+                        <div ng-show="{{vm.editMode}}">Edit</div>
+                    </h3>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
@@ -118,7 +123,7 @@
 
                             <div class="col-sm-10">
                                 <input id="day-input" type="number" class="form-control" placeholder="Day"
-                                       aria-describedby="basic-addon1" value="{{vm.myday}}">
+                                       aria-describedby="basic-addon1" value="{{vm.day}}" ng-model="vm.day">
                             </div>
                         </div>
                         <div class="form-group">
@@ -156,33 +161,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">Close</button>
-                    <button id="saveNewButton" type="button" class="btn btn-default" ng-click="vm.add()">Add</button>
-                    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()">Save</button>
+                    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="{{vm.editMode}}">Add</button>
+                    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="{{vm.editMode}}">Save</button>
                 </div>
             </script>
         </div>
-
-        <!--div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Edit / New</h4>
-                    </div>
-
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-
-                    </div>
-                </div>
-            </div>
-        </div-->
-
 
         <div class="panel panel-default">
             <!-- Default panel contents -->
@@ -201,10 +184,10 @@
                     <tbody>
                     <tr ng-repeat="rec in vm.records track by $index">
                         <td>{{rec.day}}</td>
-                        <td>{{rec.hour}}:{{rec.minute}}</td>
+                        <td>{{rec.hour | prependZero}}:{{rec.minute | prependZero}}</td>
                         <td>{{vm.tasks[rec.taskId].name}}</td>
                         <td>
-                            <span ng-click="vm.openEditDialog()" class='glyphicon glyphicon-edit'></span>
+                            <span ng-click="vm.openEditDialog($index)" class='glyphicon glyphicon-edit'></span>
                             <span ng-click="vm.deleteRecord($index)" class='glyphicon glyphicon-remove'></span>
                         </td>
                     </tr>

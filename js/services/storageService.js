@@ -22,6 +22,9 @@
                     var storedDataString = localStorage.getItem(storageItemName);
                     records = JSON.parse(storedDataString);
                 }
+
+                records.sort(sortRecordsByDay);
+
                 return records;
             }
 
@@ -64,10 +67,10 @@
             }
 
             function sortRecordsByDay(taskA, taskB) {
-                if (taskA.day === taskB.day) {
-                    return (taskA.hour * 100 + taskA.minute) - (taskB.hour * 100 + taskB.minute);
+                if (parseInt(taskA.day) === parseInt(taskB.day)) {
+                    return -1 * ((parseInt(taskA.hour) * 100 + parseInt(taskA.minute)) - (parseInt(taskB.hour) * 100 + parseInt(taskB.minute)));
                 }
-                return taskA.day - taskB.day;
+                return -1 * (parseInt(taskA.day) - parseInt(taskB.day));
             }
 
             function getStorageItemNameForRecords(year, month) {
@@ -88,7 +91,6 @@
             }
 
             return {
-                theNumber: 37,
                 getTasks: getTasks,
                 getRecords: getRecords,
                 storeRecords: storeRecords,

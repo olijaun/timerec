@@ -12,11 +12,17 @@
                 templateUrl: 'records.html',
                 controller: 'RecordsCtrl as vm'
             })
+            .state('report', {
+                url: '/report',
+                templateUrl: 'report.html',
+                controller: 'ReportCtrl as vm'
+            })
             .state('tasks', {
                 url: '/tasks',
                 templateUrl: 'tasks.html',
                 controller: 'TasksCtrl as vm'
             });
+
     });
 
     timimrecApp.filter('prependZero', function () {
@@ -30,6 +36,24 @@
             else {
                 return text;
             }
+        };
+    });
+
+    timimrecApp.filter('myfilter', function () {
+        return function (input) {
+
+            var output = {};
+
+            for (var key in input) {
+                if (input.hasOwnProperty(key)) {
+
+                    if (input[key].selectable) {
+
+                        output[key] = input[key];
+                    }
+                }
+            }
+            return output;
         };
     });
 

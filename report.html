@@ -1,0 +1,31 @@
+<div>
+    <div id="record" name="record" class="fullsize">
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Report</div>
+            <div class="table-responsive">
+
+                <table id="taskTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Summary</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="dailyReport in vm.report">
+                        <td>{{dailyReport.day}}</td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="taskSummary in dailyReport.summary">{{taskSummary.taskId}}: {{taskSummary.hours}}</li>
+                            </ul>
+                        </td>
+                        <td>{{task.selectable}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

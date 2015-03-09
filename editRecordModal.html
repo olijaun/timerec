@@ -1,7 +1,7 @@
 <div class="modal-header">
     <h3 class="modal-title">
-        <div ng-hide="{{vm.editMode}}">New</div>
-        <div ng-show="{{vm.editMode}}">Edit</div>
+        <div ng-hide="vm.editMode">New</div>
+        <div ng-show="vm.editMode">Edit</div>
     </h3>
 </div>
 <div class="modal-body">
@@ -18,22 +18,7 @@
             <label class="control-label col-sm-2">Time</label>
 
             <div class="col-sm-10">
-                <!--input id="time-input" type="time" class="form-control" placeholder="Time"
-                       aria-describedby="basic-addon1"-->
-
-                <!--div class="input-append bootstrap-timepicker">
-                    <input id="time-input" type="text" class="input-small">
-                    <span class="add-on"><i class="icon-time"></i></span>
-                </div-->
-
-                <!--div class="input-append bootstrap-timepicker">
-                    <input id="timepicker1" type="text" class="input-small" value="{{vm.time}}">
-                    <span class="glyphicon glyphicon-time"></span>
-                </div-->
-
-
                 <timepicker ng-model="vm.startTime" hour-step="1" minute-step="1" show-meridian="false"></timepicker>
-
             </div>
         </div>
 
@@ -42,7 +27,7 @@
 
             <div class="col-sm-10">
                 <select id="task-select" ng-model="vm.selectedTask" class="combobox form-control" name="horizontal"
-                        required="required" ng-options="taskId as task.name for (taskId,task) in vm.parent.tasks">
+                        required="required" ng-options="taskId as task.name for (taskId,task) in vm.parent.tasks | myfilter">
                 </select>
             </div>
         </div>
@@ -50,8 +35,8 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">Close</button>
-    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="{{vm.editMode}}">Add
+    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="vm.editMode">Add
     </button>
-    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="{{vm.editMode}}">Save
+    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="vm.editMode">Save
     </button>
 </div>

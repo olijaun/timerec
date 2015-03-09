@@ -1,7 +1,7 @@
 <div class="modal-header">
     <h3 class="modal-title">
-        <div ng-hide="{{vm.editMode}}">New Task</div>
-        <div ng-show="{{vm.editMode}}">Edit Task</div>
+        <div ng-hide="vm.editMode">New Task</div>
+        <div ng-show="vm.editMode">Edit Task</div>
     </h3>
 </div>
 <div class="modal-body">
@@ -10,8 +10,8 @@
             <label class="control-label col-sm-2">Task Id</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" placeholder="Day"
-                       aria-describedby="basic-addon1" ng-model="vm.taskId">
+                <input type="text" class="form-control" placeholder="task id"
+                       aria-describedby="basic-addon1" ng-model="vm.taskId" ng-disabled="vm.editMode">
             </div>
         </div>
         <div class="form-group">
@@ -19,25 +19,25 @@
 
             <div class="col-sm-10">
 
-                <input type="text" class="form-control" placeholder="Day"
+                <input type="text" class="form-control" placeholder="task name"
                        aria-describedby="basic-addon1" ng-model="vm.taskName">
-
             </div>
         </div>
 
         <div class="form-group">
+
             <label class="control-label col-sm-2">Selectable</label>
 
-            <div class="col-sm-10">
-                <input type="checkbox" name="selectable" ng-model="vm.selectable"><br>
+            <div class="col-sm-1">
+                <input type="checkbox" class="form-control" name="selectable" ng-model="vm.selectable">
             </div>
         </div>
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">Close</button>
-    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="{{vm.editMode}}">Add
+    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="vm.editMode">Add
     </button>
-    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="{{vm.editMode}}">Save
+    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="vm.editMode">Save
     </button>
 </div>

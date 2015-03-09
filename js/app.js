@@ -4,7 +4,7 @@
 
     timimrecApp.config(function ($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/ratings');
+        $urlRouterProvider.otherwise('/records');
 
         $stateProvider
             .state('records', {

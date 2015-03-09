@@ -45,5 +45,20 @@
 
     timerecApp.controller('EditTaskModalInstanceCtrl', ['$scope', '$modalInstance', 'parent', 'index', function ($scope, $modalInstance, parent, index) {
 
+
+        var vm = this;
+
+        vm.parent = parent;
+        vm.editMode = (index >= 0);
+
+        if (vm.editMode) {
+            vm.taskId = vm.parent.tasks;
+            vm.taskName;
+            vm.selectable;
+        } else {
+            vm.taskId = null;
+            vm.taskName = null;
+            vm.selectable = true;
+        }
     }]);
 })();

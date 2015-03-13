@@ -23,50 +23,37 @@
 
             for (var i = 0; i < records.length; i++) {
                 var record = records[i];
-                console.log(record.taskId + ", " + record.day);
+                console.log(record.taskId + ", " + record.day + ", " + record.hour + ", " + record.minute);
             }
 
-        //    List<String> lines = Files.readAllLines(currentMonthFile.toPath(), StandardCharsets.UTF_8);
-        //
-        //    // Hash Map with day as key and a hash map with task and summed time as value.
-        //    LinkedHashMap<Integer, LinkedHashMap<String, Double>> dayMap =
-        //        new LinkedHashMap<Integer, LinkedHashMap<String, Double>>();
-        //
+            // Hash Map with day as key and a hash map with task and summed time as value.
+            //{ 1 :  { taskId : 'value', taskId2 : 'value2' }, 2 : { taskId : 'value', taskId2 : 'value2' } };
+            var dayMap = {};
+
             var previousDay = null; // int
             var previousTask = null; // string
             var previousDate = null; // date
         //
-        //    int lineNumber = 0;
-        //    for (String line : lines) {
-        //        lineNumber++;
-        //
-        //        if (line.isEmpty() || line.trim().isEmpty()) { // ignore empty lines
-        //            continue;
-        //        }
-        //
-        //        String[] timeRec = line.split(";");
-        //
-        //        String task = null;
-        //        Integer day = null;
-        //        String timeAsString = null;
-        //        Date date = null;
-        //        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd HH:mm");
-        //
-        //        try {
-        //            task = timeRec[0].trim();
-        //            day = Integer.valueOf(timeRec[1].trim());
-        //            timeAsString = timeRec[2].trim();
-        //            date = format.parse(yearAndMonth + day + " " + timeAsString);
-        //        } catch (Exception e) {
-        //            throw new RuntimeException("error parsing line " + lineNumber + " of file " + currentMonthFile, e);
-        //        }
-        //
-        //        if (previousDay != null && day.equals(previousDay)) {
-        //
-        //            long durationInSecs = (date.getTime() - previousDate.getTime()) / 1000;
-        //            double durationInHours = ((double) durationInSecs) / 60. / 60.;
+            for (var i = 0; i < records.length; i++) {
+                var record = records[i];
+
+                var task = record.task;
+                var day = record.day;
+                var hour = record.hour;
+                var minute = record.minute;
+
+                var recordDate = new Date(vm.year, vm.month - 1, day, hour, minute);
+
+                if (previousDay != null && day === previousDay) {
+
+                    var durationInSecs = (recordDate.getTime() - previousDate.getTime()) / 1000;
+                    var durationInHours = durationInSecs / 60. / 60.;
+
         //            LinkedHashMap<String, Double> taskMap = null;
-        //            if (dayMap.containsKey(day)) {
+                    // { taskId : 'value', taskId2 : 'value2' }
+                    var taskMap = {};
+
+                    if (dayMap[day] !== undefined) { // does not contain key yet
         //                taskMap = dayMap.get(day);
         //            } else {
         //                taskMap = new LinkedHashMap<String, Double>();

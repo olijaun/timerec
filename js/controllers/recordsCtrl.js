@@ -29,7 +29,7 @@
 
         vm.tasks = function () {
             var ts = StorageService.getTasks();
-            ts.stop = {name: "Stop", selectable: false};
+            ts.stop = {name: "Stop", selectable: true};
             return ts;
         }();
 

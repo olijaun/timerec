@@ -14,14 +14,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="dailyReport in vm.report">
-                        <td>{{dailyReport.day}}</td>
+                    <tr ng-repeat="dayEntry in vm.report">
+                        <td>{{dayEntry.day}}</td>
                         <td>
                             <ul>
-                                <li ng-repeat="taskSummary in dailyReport.summary">{{taskSummary.taskId}}: {{taskSummary.hours}}</li>
+                                <li ng-repeat="taskSummary in dayEntry.taskSummary">{{taskSummary.taskId}}: {{taskSummary.duration}} h</li>
                             </ul>
+                            Sum: {{dayEntry.totalDuration}} h
                         </td>
-                        <td>{{task.selectable}}</td>
                     </tr>
                     </tbody>
                 </table>

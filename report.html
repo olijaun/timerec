@@ -1,9 +1,11 @@
 <div>
-    <div id="record" name="record" class="fullsize">
+    <div name="report" class="fullsize">
+
+        <month-selection year="vm.year" month="vm.month"></month-selection>
 
         <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading">Report</div>
+            <div class="panel-heading">Report {{vm.year}}-{{vm.month}}</div>
             <div class="table-responsive">
 
                 <table id="taskTable" class="table">

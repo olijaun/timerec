@@ -1,0 +1,21 @@
+<form class="form-horizontal">
+    <div class="form-group">
+
+        <label class="control-label col-sm-2">Year</label>
+
+        <div class="col-sm-4">
+            <input id="year-input" type="number" class="form-control" placeholder="Year"
+                   aria-describedby="basic-addon1" ng-model="year" ng-change="vm.loadData()">
+        </div>
+
+        <label class="control-label col-sm-2">Month</label>
+
+        <div class="col-sm-4">
+            <select id="month-input" class="combobox form-control" name="horizontal"
+                    required="required" ng-model="month"
+                    ng-options="o.name for o in vm.monthOptions" ng-change="vm.loadData()">
+
+            </select>
+        </div>
+    </div>
+</form>

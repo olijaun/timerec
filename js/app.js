@@ -1,8 +1,8 @@
 (function () {
 
-    timimrecApp = angular.module('timerecApp');
+    timerecApp = angular.module('timerecApp');
 
-    timimrecApp.config(function ($stateProvider, $urlRouterProvider) {
+    timerecApp.config(function ($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/records');
 
@@ -25,7 +25,7 @@
 
     });
 
-    timimrecApp.filter('prependZero', function () {
+    timerecApp.filter('prependZero', function () {
         return function (input) {
 
             var text = '' + input;
@@ -39,7 +39,7 @@
         };
     });
 
-    timimrecApp.filter('myfilter', function () {
+    timerecApp.filter('myfilter', function () {
         return function (input) {
 
             var output = {};
@@ -55,6 +55,24 @@
             }
             return output;
         };
+    });
+
+    timerecApp.directive('monthSelection', function(){
+        return {
+            restrict: 'E',
+            templateUrl: 'monthSelection.html',
+            scope: {year: '=', month: '='},
+            controller: function() {
+                var vm = this;
+
+                //console.log("yyyyyyyyyear " + bla.year);
+                //vm.summary = vm.rating.name + " rated " + vm.rating.grade;
+
+                //vm.click = function(){ alert ('Hello ' + vm.rating.name); };
+            },
+            controllerAs: 'vm',
+            bindToController: true
+        }
     });
 
 })();

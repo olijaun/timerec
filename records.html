@@ -14,7 +14,7 @@
 
                         <div class="col-sm-4">
                             <input id="year-input" type="number" class="form-control" placeholder="Year"
-                                   aria-describedby="basic-addon1" value="{{vm.year}}">
+                                   aria-describedby="basic-addon1" ng-model="vm.year" value="{{vm.year}}" ng-change="vm.loadData()">
                         </div>
 
                         <label class="control-label col-sm-2">Month</label>
@@ -30,27 +30,6 @@
                 </form>
             </div>
         </div>
-        <!--div class="panel panel-primary">
-
-            <div class="panel-heading">
-                <h3 class="panel-title">New Task</h3>
-            </div>
-
-            <div class="panel-body">
-
-                <div class="form-group" role="group">
-                    <label class="control-label col-sm-2"></label>
-
-                    <div class="col-sm-10">
-                        <button ng-click="vm.openEditDialog(-1)" id="add-button" type="button" class="btn btn-default">
-                            Add
-                        </button>
-                        <button ng-click="vm.stopTask()" id="stop-button" type="button" class="btn btn-default">Stop
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div-->
 
         <div class="panel panel-default">
             <!-- Default panel contents -->

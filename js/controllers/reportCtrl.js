@@ -10,6 +10,10 @@
         vm.month = now.getMonth() + 1;
         vm.year = now.getFullYear();
 
+        vm.ngChange = function() {
+            console.log('chhhhhhhhhhhhhhhhhhhhhhhhhanged');
+        };
+
         vm.report = function () {
 
             var records = StorageService.getRecords(vm.year, vm.month);

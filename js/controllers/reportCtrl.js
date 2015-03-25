@@ -5,18 +5,20 @@
     timerecApp.controller('ReportCtrl', ['StorageService', '$scope', '$modal', function (StorageService, $scope, $modal) {
         var vm = this;
 
-        var now = new Date();
+        vm.selectedDate = new Date();
 
-        vm.month = now.getMonth() + 1;
-        vm.year = now.getFullYear();
-
-        vm.ngChange = function() {
-            console.log('chhhhhhhhhhhhhhhhhhhhhhhhhanged');
+        vm.updateStuff = function() {
+            console.log('update stuff');
+            vm.report = vm.generateReport();
         };
 
-        vm.report = function () {
+        vm.report = [];
 
-            var records = StorageService.getRecords(vm.year, vm.month);
+        vm.generateReport = function() {
+            console.log('reporting now');
+            var reportDate = vm.selectedDate;
+
+            var records = StorageService.getRecords(reportDate.getFullYear(), reportDate.getMonth() + 1);
 
             // Hash Map with day as key and a hash map with task and summed time as value.
             //{ 1 :  { taskId : 'value', taskId2 : 'value2' }, 2 : { taskId : 'value', taskId2 : 'value2' } };
@@ -34,7 +36,7 @@
                 var hour = record.hour;
                 var minute = record.minute;
 
-                var recordDate = new Date(vm.year, vm.month - 1, day, hour, minute);
+                var recordDate = new Date(reportDate.getFullYear(), reportDate.getMonth(), day, hour, minute);
 
                 if (previousDay != null && day === previousDay) {
 
@@ -94,6 +96,7 @@
                 r.push(daySummary);
             }
             return r;
-        }();
+        };
+
     }]);
 })();

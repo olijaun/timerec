@@ -1,11 +1,11 @@
 <div>
     <div name="report" class="fullsize">
 
-        <month-selection year="vm.year" month="vm.month" ng-change="vm.changed()"></month-selection>
+        <month-selection date="vm.selectedDate" ng-model="vm.selectedDate" ng-change="vm.updateStuff()"></month-selection>
 
         <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading">Report {{vm.year}}-{{vm.month}}</div>
+            <div class="panel-heading">Report {{vm.selectedDate}}</div>
             <div class="table-responsive">
 
                 <table id="taskTable" class="table">
@@ -16,6 +16,7 @@
                     </tr>
                     </thead>
                     <tbody>
+
                     <tr ng-repeat="dayEntry in vm.report">
                         <td>{{dayEntry.day}}</td>
                         <td>

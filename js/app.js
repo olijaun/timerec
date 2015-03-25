@@ -61,9 +61,18 @@
         return {
             restrict: 'E',
             templateUrl: 'monthSelection.html',
-            scope: {year: '=', month: '='},
+            scope: {
+                date: '=',
+                //ngModel: "=",
+                ngChange : "="
+            },
             controller: function() {
                 var vm = this;
+
+                console.log('selected date: ' + vm.date);
+
+                vm.year = vm.date.getFullYear();
+                vm.month = vm.date.getMonth() + 1;
 
                 vm.monthOptions = [
                     {name: "January", id: 1},
@@ -80,11 +89,13 @@
                     {name: "December", id: 12}
                 ];
 
-                console.log("yyyyyyyyyear " + vm.year);
-                console.log("mmmmmmonthhh " + vm.month);
-                //vm.summary = vm.rating.name + " rated " + vm.rating.grade;
+                vm.selectedMonth = vm.monthOptions[vm.date.getMonth()];
 
-                //vm.click = function(){ alert ('Hello ' + vm.rating.name); };
+                vm.updateDate = function() {
+                    console.log('new year: ' + vm.year + ", new month: " + (vm.selectedMonth.id - 1));
+                    vm.date = new Date(vm.year, vm.selectedMonth.id - 1, 1);
+                    console.log('update date ' + vm.date);
+                }
             },
             controllerAs: 'vm',
             bindToController: true

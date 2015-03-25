@@ -5,16 +5,15 @@
 
         <div class="col-sm-4">
             <input id="year-input" type="number" class="form-control" placeholder="Year"
-                   aria-describedby="basic-addon1" ng-model="vm.year" ng-change="vm.loadData()">
+                   aria-describedby="basic-addon1" ng-model="vm.year" ng-change="vm.updateDate()">
         </div>
 
         <label class="control-label col-sm-2">Month</label>
 
         <div class="col-sm-4">
             <select id="month-input" class="combobox form-control" name="horizontal"
-                    required="required" ng-model="vm.month.id"
-                    ng-options="o.name for o in vm.monthOptions" ng-change="vm.loadData()">
-
+                    required="required" ng-model="vm.selectedMonth"
+                    ng-options="o.name for o in vm.monthOptions" ng-change="vm.updateDate()">
             </select>
         </div>
     </div>

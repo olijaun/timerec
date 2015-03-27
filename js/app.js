@@ -57,24 +57,15 @@
         };
     });
 
-    timerecApp.directive('monthSelection', function(){
+    timerecApp.directive('monthSelection', function () {
         return {
             restrict: 'E',
             templateUrl: 'monthSelection.html',
-            scope: {
-                date: '=',
-                //ngModel: "=",
-                ngChange : "="
-            },
-            controller: function() {
-                var vm = this;
+            require: 'ngModel',
+            replace: true,
+            link: function (scope, iElement, iAttrs, ngModelCtrl) {
 
-                console.log('selected date: ' + vm.date);
-
-                vm.year = vm.date.getFullYear();
-                vm.month = vm.date.getMonth() + 1;
-
-                vm.monthOptions = [
+                scope.monthOptions = [
                     {name: "January", id: 1},
                     {name: "February", id: 2},
                     {name: "March", id: 3},
@@ -89,17 +80,42 @@
                     {name: "December", id: 12}
                 ];
 
-                vm.selectedMonth = vm.monthOptions[vm.date.getMonth()];
+                ngModelCtrl.$formatters.push(function (modelValue) {
+                    return {
+                        year: modelValue.getFullYear(),
+                        month: scope.monthOptions[modelValue.getMonth()]
+                    };
+                });
 
-                vm.updateDate = function() {
-                    console.log('new year: ' + vm.year + ", new month: " + (vm.selectedMonth.id - 1));
-                    vm.date = new Date(vm.year, vm.selectedMonth.id - 1, 1);
-                    console.log('update date ' + vm.date);
-                }
-            },
-            controllerAs: 'vm',
-            bindToController: true
-        }
+                ngModelCtrl.$parsers.push(function (viewValue) {
+                    var year = viewValue.year;
+                    var month = viewValue.month.id;
+
+                    return new Date(year, month - 1, 1);
+                });
+
+                scope.updateDate = function() {
+                    console.log('change....');
+                };
+
+                scope.$watch('year + month.id', function () {
+                    ngModelCtrl.$setViewValue({year: scope.year, month: scope.month});
+                });
+
+                ngModelCtrl.$viewChangeListeners.push(function() {
+                    console.log('eval ng-change')
+                });
+
+                ngModelCtrl.$render = function () {
+                    var now = new Date();
+                    if (!ngModelCtrl.$viewValue) {
+                        ngModelCtrl.$viewValue = {year: now.getFullYear(), month: scope.monthOptions[now.getMonth()]};
+                    }
+                    scope.year = ngModelCtrl.$viewValue.year;
+                    scope.month = ngModelCtrl.$viewValue.month;
+                };
+            }
+        };
     });
 
 })();

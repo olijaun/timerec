@@ -4,11 +4,10 @@
 
     timerecApp.controller('ReportCtrl', ['StorageService', '$scope', '$modal', function (StorageService, $scope, $modal) {
         var vm = this;
-
         vm.selectedDate = new Date();
 
         vm.updateStuff = function() {
-            console.log('update stuff');
+            console.log('update stuff --> ' + vm.selectedDate);
             vm.report = vm.generateReport();
         };
 

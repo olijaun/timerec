@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+
+<body ng-app="testApp">
+<div class="container" style="...">
+
+    <div ng-controller="MainCtrl as vm">
+        Selected Date: {{ vm.selectedDate | date:'medium' }}
+        <hr>
+        <table border="1">
+            <tbody ng-repeat="d in vm.dateList track by $index">
+            <tr>
+                <td>{{d}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <month-selection ng-model="vm.selectedDate" ng-change="vm.updateStuff()"></month-selection>
+
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="js/testapp.js"></script>
+    </div>
+</div>
+</body>
+</html>

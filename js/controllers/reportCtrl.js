@@ -6,11 +6,6 @@
         var vm = this;
         vm.selectedDate = new Date();
 
-        vm.updateStuff = function() {
-            console.log('update stuff --> ' + vm.selectedDate);
-            vm.report = vm.generateReport();
-        };
-
         vm.report = [];
 
         vm.generateReport = function() {
@@ -94,7 +89,7 @@
 
                 r.push(daySummary);
             }
-            return r;
+            vm.report = r;
         };
 
     }]);

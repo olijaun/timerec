@@ -6,26 +6,8 @@
 
         var vm = this;
 
-        var now = new Date();
-        vm.year = now.getFullYear();
-        vm.month = now.getMonth() + 1;
-        vm.day = now.getDate();
-
-        vm.monthOptions = [
-            {name: "January", id: 1},
-            {name: "February", id: 2},
-            {name: "March", id: 3},
-            {name: "April", id: 4},
-            {name: "May", id: 5},
-            {name: "June", id: 6},
-            {name: "July", id: 7},
-            {name: "August", id: 8},
-            {name: "September", id: 9},
-            {name: "October", id: 10},
-            {name: "November", id: 11},
-            {name: "December", id: 12}
-        ];
-        vm.selectedMonth = vm.monthOptions[vm.month - 1];
+        vm.selectedDate = new Date();
+        vm.day = vm.selectedDate.getDate();
 
         vm.tasks = function () {
             var ts = StorageService.getTasks();
@@ -34,26 +16,22 @@
         }();
 
         vm.records = function () {
-            var ts = StorageService.getRecords(vm.year, vm.month);
+            var ts = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
             return ts;
         }();
 
         vm.addTask = function (taskId, day, hour, minute) {
-            var now = new Date();
-
             vm.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
-            StorageService.storeRecords(vm.year, vm.selectedMonth.id, vm.records);
+            StorageService.storeRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1, vm.records);
 
-            vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
+            vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
         };
 
         vm.updateTask = function (index, taskId, day, hour, minute) {
-            var now = new Date();
-
             vm.records[index] = {taskId: taskId, day: day, hour: hour, minute: minute};
-            StorageService.storeRecords(vm.year, vm.selectedMonth.id, vm.records);
+            StorageService.storeRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1, vm.records);
 
-            vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
+            vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
         };
 
         vm.startTask = function (taskId) {
@@ -70,13 +48,13 @@
         };
 
         vm.loadData = function () {
-            vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
+            vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
         };
 
         vm.deleteRecord = function (index) {
             vm.records.splice(index, 1);
-            StorageService.storeRecords(vm.year, vm.selectedMonth.id, vm.records);
-            vm.records = StorageService.getRecords(vm.year, vm.selectedMonth.id);
+            StorageService.storeRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1, vm.records);
+            vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
         }
 
         vm.openEditDialog = function (index) {
@@ -123,11 +101,11 @@
         if (vm.editMode) {
             vm.selectedTask = parent.records[vm.index].taskId;
             vm.day = parent.records[vm.index].day;
-            vm.startTime = new Date(parseInt(vm.parent.year), parseInt(vm.parent.selectedMonth.id) - 1,
+            vm.startTime = new Date(vm.parent.selectedDate.getFullYear(), vm.parent.selectedDate.getMonth(),
                 parseInt(vm.parent.records[vm.index].day), parseInt(vm.parent.records[vm.index].hour), parseInt(vm.parent.records[vm.index].minute));
         } else {
             var now = new Date();
-            vm.startTime = new Date(parseInt(vm.parent.year), parseInt(vm.parent.selectedMonth.id) - 1);
+            vm.startTime = new Date(vm.parent.selectedDate.getFullYear(), vm.parent.selectedDate.getMonth());
 
             if (now.getFullYear() === vm.startTime.getFullYear() && now.getMonth() === vm.startTime.getMonth()) {
                 vm.startTime.setHours(now.getHours());

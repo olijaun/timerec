@@ -27,7 +27,8 @@
 
             <div class="col-sm-10">
                 <select id="task-select" ng-model="vm.selectedTask" class="combobox form-control" name="horizontal"
-                        required="required" ng-options="taskId as task.name for (taskId,task) in vm.parent.tasks | myfilter">
+                        required="required"
+                        ng-options="taskId as task.name for (taskId,task) in vm.parent.tasks | invisibleTaskFilter">
                 </select>
             </div>
         </div>

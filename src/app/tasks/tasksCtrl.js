@@ -15,7 +15,7 @@
         vm.openEditDialog = function (selectedTaskId) {
 
             var modalInstance = $modal.open({
-                templateUrl: 'editTaskModal.html',
+                templateUrl: 'src/app/tasks/edit-task-modal.html',
                 controller: 'EditTaskModalInstanceCtrl',
                 controllerAs: 'vm',
                 //size: size,
@@ -31,10 +31,7 @@
 
             modalInstance.result.then(function (selectedItem) {
                 console.log('result: ' + selectedItem);
-                //console.log('day: ' + vm.myday);
-                //$scope.selected = selectedItem;
             }, function () {
-                //$log.info('Modal dismissed at: ' + new Date());
             });
         };
 

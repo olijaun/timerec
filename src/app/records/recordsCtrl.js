@@ -1,8 +1,6 @@
 (function () {
 
-    var timerecApp = angular.module("timerecApp");
-
-    timerecApp.controller('RecordsCtrl', ['StorageService', '$scope', '$modal', function (StorageService, $scope, $modal) {
+    angular.module("timerecApp").controller('RecordsCtrl', ['StorageService', '$scope', '$modal', function (StorageService, $scope, $modal) {
 
         var vm = this;
 
@@ -60,7 +58,7 @@
         vm.openEditDialog = function (index) {
 
             var modalInstance = $modal.open({
-                templateUrl: 'editRecordModal.html',
+                templateUrl: 'src/app/records/edit-record-modal.html',
                 controller: 'ModalInstanceCtrl',
                 controllerAs: 'vm',
                 //size: size,
@@ -76,10 +74,7 @@
 
             modalInstance.result.then(function (selectedItem) {
                 console.log('result: ' + selectedItem);
-                //console.log('day: ' + vm.myday);
-                //$scope.selected = selectedItem;
             }, function () {
-                //$log.info('Modal dismissed at: ' + new Date());
             });
         };
 

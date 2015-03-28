@@ -23,7 +23,7 @@
                     <tbody>
                     <tr ng-repeat="rec in vm.records track by $index">
                         <td>{{rec.day}}</td>
-                        <td>{{rec.hour | prependZero}}:{{rec.minute | prependZero}}</td>
+                        <td>{{rec.hour | prependZeroFilter}}:{{rec.minute | prependZeroFilter}}</td>
                         <td>{{vm.tasks[rec.taskId].name}}</td>
                         <td>
                             <span ng-click="vm.openEditDialog($index)" class='glyphicon glyphicon-edit'></span>

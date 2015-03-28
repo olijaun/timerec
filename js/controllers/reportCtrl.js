@@ -32,10 +32,10 @@
 
                 var recordDate = new Date(reportDate.getFullYear(), reportDate.getMonth(), day, hour, minute);
 
-                if (previousDay != null && day === previousDay) {
+                if (previousDay !== null && day === previousDay) {
 
                     var durationInSecs = (recordDate.getTime() - previousDate.getTime()) / 1000;
-                    var durationInHours = durationInSecs / 60. / 60.;
+                    var durationInHours = durationInSecs / 60.0 / 60.0;
 
                     // { taskId : 'value', taskId2 : 'value2' }
                     var taskMap = null;
@@ -71,13 +71,12 @@
 
                 var dayEntry = dayMap[dayKey];
                 var daySummary = { day: dayKey, totalDuration: 0, taskSummary: [] };
-                //console.log("=== Day " + dayKey + "\n");
-                var taskMap = dayEntry;
-                var timeSum = 0.;
+                var daytaskMap = dayEntry;
+                var timeSum = 0.0;
 
-                for (var taskEntryKey in taskMap) {
+                for (var taskEntryKey in daytaskMap) {
 
-                    var taskEntry = taskMap[taskEntryKey];
+                    var taskEntry = daytaskMap[taskEntryKey];
 
                     console.log(taskEntryKey + ", " + taskEntry);
 

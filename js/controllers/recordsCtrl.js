@@ -55,7 +55,7 @@
             vm.records.splice(index, 1);
             StorageService.storeRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1, vm.records);
             vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
-        }
+        };
 
         vm.openEditDialog = function (index) {
 
@@ -84,9 +84,7 @@
         };
 
         vm.closeModal = function () {
-            //vm.close();
-        }
-
+        };
 
     }]);
 

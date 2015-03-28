@@ -103,7 +103,6 @@
                 });
 
                 ngModelCtrl.$viewChangeListeners.push(function() {
-                    console.log('eval ng-change')
                 });
 
                 ngModelCtrl.$render = function () {

@@ -44,22 +44,21 @@
             StorageService.storeTasks(vm.tasks);
 
             vm.tasks = StorageService.getTasks();
-        }
+        };
 
         vm.deleteTask = function(taskId) {
             delete vm.records[taskId];
             StorageService.storeTasks(vm.tasks);
 
             vm.tasks = StorageService.getTasks();
-        }
+        };
 
         vm.updateTask = function(taskId, name, selectable) {
-            vm.addTask(taskId, name, selectable)
-        }
+            vm.addTask(taskId, name, selectable);
+        };
 
         vm.closeModal = function () {
-            //vm.close();
-        }
+        };
     }]);
 
     timerecApp.controller('EditTaskModalInstanceCtrl', ['$scope', '$modalInstance', 'parent', 'selectedTaskId', function ($scope, $modalInstance, parent, selectedTaskId) {
@@ -67,9 +66,7 @@
         var vm = this;
 
         vm.parent = parent;
-        console.log('sel task id: ' + selectedTaskId);
-        vm.editMode = (selectedTaskId != null && selectedTaskId != undefined);
-        console.log('edit mode: ' + vm.editMode);
+        vm.editMode = (selectedTaskId !== null && selectedTaskId !== undefined);
 
         if (vm.editMode) {
             vm.taskId = selectedTaskId;

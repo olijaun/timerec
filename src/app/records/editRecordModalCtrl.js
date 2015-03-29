@@ -8,6 +8,8 @@
 
         vm.editMode = vm.index >= 0;
 
+        vm.errorMessage = null;
+
         if (vm.editMode) {
             vm.selectedTask = parent.records[vm.index].taskId;
             vm.day = parent.records[vm.index].day;
@@ -22,17 +24,25 @@
                 vm.startTime.setMinutes(now.getMinutes());
                 vm.day = new Date().getDate();
             }
-            vm.selectedTask = null;
+            vm.selectedTask = 'stop';
         }
 
         vm.save = function () {
-            vm.parent.updateTask(vm.index, vm.selectedTask, vm.day, vm.startTime.getHours(), vm.startTime.getMinutes());
-            $modalInstance.dismiss('cancel');
+            try {
+                vm.parent.updateTask(vm.index, vm.selectedTask, vm.day, vm.startTime.getHours(), vm.startTime.getMinutes());
+                $modalInstance.dismiss('cancel');
+            } catch (e) {
+                vm.errorMessage = e;
+            }
         };
 
         vm.add = function () {
-            vm.parent.addTask(vm.selectedTask, vm.day, vm.startTime.getHours(), vm.startTime.getMinutes());
-            $modalInstance.dismiss('cancel');
+            try {
+                vm.parent.addTask(vm.selectedTask, vm.day, vm.startTime.getHours(), vm.startTime.getMinutes());
+                $modalInstance.dismiss('cancel');
+            } catch (e) {
+                vm.errorMessage = e;
+            }
         };
 
         vm.cancel = function () {

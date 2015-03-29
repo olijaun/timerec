@@ -19,17 +19,22 @@
         }();
 
         vm.addTask = function (taskId, day, hour, minute) {
-            vm.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
-            StorageService.storeRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1, vm.records);
-
-            vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
+            try {
+                vm.records.push({taskId: taskId, day: day, hour: hour, minute: minute});
+                StorageService.storeRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1, vm.records);
+            } finally {
+                vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
+            }
         };
 
         vm.updateTask = function (index, taskId, day, hour, minute) {
-            vm.records[index] = {taskId: taskId, day: day, hour: hour, minute: minute};
-            StorageService.storeRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1, vm.records);
+            try {
+                vm.records[index] = {taskId: taskId, day: day, hour: hour, minute: minute};
+                StorageService.storeRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1, vm.records);
 
-            vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
+            } finally {
+                vm.records = StorageService.getRecords(vm.selectedDate.getFullYear(), vm.selectedDate.getMonth() + 1);
+            }
         };
 
         vm.startTask = function (taskId) {

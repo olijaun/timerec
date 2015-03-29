@@ -18,3 +18,13 @@ body {
 
 /* fix for angular ui bootstrap */
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+timepicker.ng-invalid {
+    border-color: red;
+    border-width: 2px;
+}
+
+input.ng-invalid {
+    border-color: red;
+    border-width: 2px;
+}

@@ -5,13 +5,13 @@
     </h3>
 </div>
 <div class="modal-body">
-    <form class="form-horizontal">
+    <form name="taskForm" class="form-horizontal" novalidate>
         <div class="form-group">
             <label class="control-label col-sm-2">Task Id</label>
 
             <div class="col-sm-10">
                 <input type="text" class="form-control" placeholder="task id"
-                       aria-describedby="basic-addon1" ng-model="vm.taskId" ng-disabled="vm.editMode">
+                       aria-describedby="basic-addon1" ng-model="vm.taskId" ng-disabled="vm.editMode" required>
             </div>
         </div>
         <div class="form-group">
@@ -20,7 +20,7 @@
             <div class="col-sm-10">
 
                 <input type="text" class="form-control" placeholder="task name"
-                       aria-describedby="basic-addon1" ng-model="vm.taskName">
+                       aria-describedby="basic-addon1" ng-model="vm.taskName" required>
             </div>
         </div>
 
@@ -29,15 +29,15 @@
             <label class="control-label col-sm-2">Selectable</label>
 
             <div class="col-sm-1">
-                <input type="checkbox" class="form-control" name="selectable" ng-model="vm.selectable">
+                <input type="checkbox" class="form-control" name="selectable" ng-model="vm.selectable" required>
             </div>
         </div>
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">Close</button>
-    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="vm.editMode">Add
+    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="vm.editMode" ng-disabled="!taskForm.$valid">Add
     </button>
-    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="vm.editMode">Save
+    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="vm.editMode" ng-disabled="!taskForm.$valid">Save
     </button>
 </div>

@@ -3,6 +3,7 @@
     angular.module('timerecApp').controller('TasksCtrl', ['StorageService', '$modal', function (StorageService, $modal) {
 
         var vm = this;
+        vm.errorMessage = null;
 
         vm.tasks = function () {
             var ts = StorageService.getTasks();
@@ -34,11 +35,14 @@
         };
 
         vm.addTask = function (taskId, name, selectable) {
-
-            vm.tasks[taskId] = {name: name, selectable: selectable};
-            StorageService.storeTasks(vm.tasks);
-
-            vm.tasks = StorageService.getTasks();
+            try {
+                vm.tasks[taskId] = {name: name, selectable: selectable};
+                StorageService.storeTasks(vm.tasks);
+            } catch(e) {
+                vm.errorMessage = e;
+            } finally {
+                vm.tasks = StorageService.getTasks();
+            }
         };
 
         vm.deleteTask = function (taskId) {

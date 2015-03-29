@@ -1,5 +1,5 @@
+'use strict';
 (function () {
-
     angular.module('timerecApp').filter('invisibleTaskFilter', function () {
 
         return function (input) {

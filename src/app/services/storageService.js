@@ -1,16 +1,14 @@
+'use strict';
 (function () {
 
-    var timerecApp = angular.module("timerecApp");
-
-    timerecApp.factory('StorageService', function () {
-
+    angular.module('timerecApp').factory('StorageService', function () {
         return (function () {
 
             var defaultTasks = {
-                taskA: {name: "My Task 1", selectable: true},
-                taskB: {name: "My Task 2", selectable: true},
-                taskC: {name: "My Task 3", selectable: true},
-                taskD: {name: "Old Task", selectable: false}
+                taskA: {name: 'My Task 1', selectable: true},
+                taskB: {name: 'My Task 2', selectable: true},
+                taskC: {name: 'My Task 3', selectable: true},
+                taskD: {name: 'Old Task', selectable: false}
             };
 
             function getRecords(year, month) {

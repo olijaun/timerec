@@ -1,14 +1,12 @@
+'use strict';
 (function () {
-
-    var timerecApp = angular.module("timerecApp");
-
-    timerecApp.controller('ReportCtrl', ['StorageService', '$scope', '$modal', function (StorageService, $scope, $modal) {
+    angular.module('timerecApp').controller('ReportCtrl', ['StorageService', function (StorageService) {
         var vm = this;
         vm.selectedDate = new Date();
 
         vm.report = [];
 
-        vm.generateReport = function() {
+        vm.generateReport = function () {
             console.log('reporting now');
             var reportDate = vm.selectedDate;
 
@@ -21,7 +19,7 @@
             var previousDay = null; // int
             var previousTask = null; // string
             var previousDate = null; // date
-        //
+            //
             for (var i = records.length - 1; i >= 0; i--) {
                 var record = records[i];
 
@@ -42,12 +40,12 @@
 
                     if (dayMap[day] !== undefined) { // contains key
                         taskMap = dayMap[day];
-                   } else {
+                    } else {
                         taskMap = {};
                         dayMap[day] = taskMap;
                     }
 
-                    if ("stop" !== previousTask) {
+                    if ('stop' !== previousTask) {
                         if (taskMap[previousTask] !== undefined) {
                             taskMap[previousTask] = taskMap[previousTask] + durationInHours;
                         } else {
@@ -55,7 +53,7 @@
                         }
                     }
                 } else if (previousDay !== null && previousDay > day) {
-                    throw "invalid format. time records have to be in order";
+                    throw 'invalid format. time records have to be in order';
                 }
 
                 previousDay = day;
@@ -67,26 +65,29 @@
             // [ { day: 1, totalDuration: 8, taskSummary: [ { taskId: 'task1', duration: 7 }, ... ] }, ...]
             var r = [];
 
-            for(var dayKey in dayMap) {
+            for (var dayKey in dayMap) {
 
-                var dayEntry = dayMap[dayKey];
-                var daySummary = { day: dayKey, totalDuration: 0, taskSummary: [] };
-                var daytaskMap = dayEntry;
-                var timeSum = 0.0;
+                if (dayMap.hasOwnProperty(dayKey)) {
 
-                for (var taskEntryKey in daytaskMap) {
+                    var dayEntry = dayMap[dayKey];
+                    var daySummary = {day: dayKey, totalDuration: 0, taskSummary: []};
+                    var daytaskMap = dayEntry;
 
-                    var taskEntry = daytaskMap[taskEntryKey];
+                    for (var taskEntryKey in daytaskMap) {
 
-                    console.log(taskEntryKey + ", " + taskEntry);
+                        if (daytaskMap.hasOwnProperty(taskEntryKey)) {
 
-                    var taskSummary = { taskId: taskEntryKey, duration: taskEntry };
+                            var taskEntry = daytaskMap[taskEntryKey];
 
-                    daySummary.taskSummary.push(taskSummary);
-                    daySummary.totalDuration += taskEntry;
+                            var taskSummary = {taskId: taskEntryKey, duration: taskEntry};
+
+                            daySummary.taskSummary.push(taskSummary);
+                            daySummary.totalDuration += taskEntry;
+                        }
+                    }
+
+                    r.push(daySummary);
                 }
-
-                r.push(daySummary);
             }
             vm.report = r;
         };

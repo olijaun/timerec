@@ -1,3 +1,4 @@
+'use strict';
 (function () {
-    angular.module("timerecApp", ['ui.bootstrap', 'ui.router']);
+    angular.module('timerecApp', ['ui.bootstrap', 'ui.router']);
 })();

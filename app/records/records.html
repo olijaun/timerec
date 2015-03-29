@@ -1,0 +1,38 @@
+<div>
+    <div id="record" name="record" class="fullsize">
+
+        <month-selection ng-model="vm.selectedDate" ng-change="vm.loadData()"></month-selection>
+
+        <div class="panel panel-default">
+            
+            <div class="panel-heading">Records</div>
+            <button ng-click="vm.openEditDialog(-1)" id="add-button" type="button" class="btn btn-default">
+                Add
+            </button>
+            <div class="table-responsive">
+
+                <table id="taskTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Start time</th>
+                        <th>Task</th>
+                        <th>{{}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="rec in vm.records track by $index">
+                        <td>{{rec.day}}</td>
+                        <td>{{rec.hour | prependZeroFilter}}:{{rec.minute | prependZeroFilter}}</td>
+                        <td>{{vm.tasks[rec.taskId].name}}</td>
+                        <td>
+                            <span ng-click="vm.openEditDialog($index)" class="glyphicon glyphicon-edit"></span>
+                            <span ng-click="vm.deleteRecord($index)" class="glyphicon glyphicon-remove"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

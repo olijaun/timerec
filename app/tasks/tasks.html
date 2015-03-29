@@ -1,0 +1,35 @@
+<div>
+    <div id="record" name="record" class="fullsize">
+
+        <div class="panel panel-default">
+            
+            <div class="panel-heading">Tasks</div>
+            <button ng-click="vm.openEditDialog()" id="add-button" type="button" class="btn btn-default">
+                Add
+            </button>
+            <div class="table-responsive">
+
+                <table id="taskTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Visible</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(taskId, task) in vm.tasks track by $index">
+                        <td>{{taskId}}</td>
+                        <td>{{task.name}}</td>
+                        <td>{{task.selectable}}</td>
+                        <td>
+                            <span ng-click="vm.openEditDialog(taskId)" class="glyphicon glyphicon-edit"></span>
+                            
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

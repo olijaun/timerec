@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        <div ng-hide="vm.editMode">New</div>
+        <div ng-show="vm.editMode">Edit</div>
+    </h3>
+</div>
+<div class="modal-body">
+    <div class="alert alert-danger alert-dismissible" role="alert" ng-show="vm.errorMessage">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{vm.errorMessage}}
+    </div>
+    <form name="recordForm" class="form-horizontal" novalidate>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Day</label>
+
+            <div class="col-sm-10">
+                <input id="day-input" name="day" type="number" class="form-control" placeholder="Day" aria-describedby="basic-addon1" value="{{vm.day}}" ng-model="vm.day" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Time</label>
+
+            <div class="col-sm-10">
+                <timepicker name="startTime" ng-model="vm.startTime" hour-step="1" minute-step="1" show-meridian="false" required></timepicker>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Task</label>
+
+            <div class="col-sm-10">
+                <select id="task-select" name="task" ng-model="vm.selectedTask" class="combobox form-control" name="horizontal" required ng-options="taskId as task.name for (taskId,task) in vm.parent.tasks | invisibleTaskFilter">
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">Close</button>
+    <button id="saveNewButton" type="button" class="btn btn-primary" ng-click="vm.add()" ng-hide="vm.editMode" ng-disabled="!recordForm.$valid">Add
+    </button>
+    <button id="saveButton" type="button" class="btn btn-primary" ng-click="vm.save()" ng-show="vm.editMode" ng-disabled="!recordForm.$valid">Save
+    </button>
+</div>

@@ -1,0 +1,34 @@
+<div>
+    <div name="report" class="fullsize">
+
+        <month-selection ng-model="vm.selectedDate" ng-change="vm.generateReport()"></month-selection>
+
+        <div class="panel panel-default">
+            
+            <div class="panel-heading">Report {{vm.selectedDate.getFullYear()}}-{{vm.selectedDate.getMonth()}}</div>
+            <div class="table-responsive">
+
+                <table id="taskTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Summary</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="dayEntry in vm.report">
+                        <td>{{dayEntry.day}}</td>
+                        <td>
+                            <ul>
+                                <li ng-repeat="taskSummary in dayEntry.taskSummary">{{taskSummary.taskId}}: {{taskSummary.duration}} h</li>
+                            </ul>
+                            Sum: {{dayEntry.totalDuration}} h
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

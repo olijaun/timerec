@@ -23,11 +23,11 @@ gulp.task('analyze', function (cb) {
         .on('end', cb); // returning the stream does not fail the build, therefore we must use the callback style
 });
 
-gulp.task('release', ['clean'], function(){
-    var processedJsFile = 'cr-app.js'; // Convention: This name has to match the name in the build comment of the index.html
+gulp.task('release', ['clean'], function () {
+    var processedJsFile = 'timerec-app.js'; // Convention: This name has to match the name in the build comment of the index.html
 
     var assets = $$.useref.assets();
-    var appAndTemplateFilter = $$.filter(['**/*app.js','**/*templates.js']); // Convention: filter out the *.app.js and the *template.js file
+    var appAndTemplateFilter = $$.filter(['**/*app.js', '**/*templates.js']); // Convention: filter out the *.app.js and the *template.js file
     var jsFilter = $$.filter('**/*.js');
     var cssFilter = $$.filter('**/*.css');
     var htmlFilter = $$.filter('**/*.html');
@@ -35,15 +35,18 @@ gulp.task('release', ['clean'], function(){
 
     var templateStream = gulp.src('./src/app/**/*.html')
         .pipe($$.debug({title: 'Template Files:'}))
-        .pipe($$.angularTemplatecache('cr-templates.js', {
-            module: 'RatingApp',
+        .pipe($$.angularTemplatecache('timerec-templates.js', {
+            module: 'timerecApp',
             base: basePath
         }));
 
-    var assetStream = gulp.src('./src/index.html')
+    gulp.src('./src/bower_components/bootstrap/fonts/*')
+        .pipe(gulp.dest('./dist/fonts'));
+
+    var assetStream = gulp.src(['./src/**/*.html', '!./src/bower_components/**/*'])
         .pipe(assets);               // Concatenate asset-groups with gulp-useref
 
-    return streamqueue({ objectMode: true }, assetStream, templateStream) // streamqueue should keep the order -> templates are concatenated at the end
+    return streamqueue({objectMode: true}, assetStream, templateStream) // streamqueue should keep the order -> templates are concatenated at the end
         .pipe(appAndTemplateFilter)
         .pipe($$.debug({title: 'Asset Files:'}))
         .pipe($$.concat(processedJsFile))// Concat the *template.js file to the *app.js file

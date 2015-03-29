@@ -10,13 +10,16 @@
 
     <title>timerec</title>
 
+    <!-- build:css vendor.css -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap-combobox/css/bootstrap-combobox.css" rel="stylesheet">
     <link href="bower_components/bootstrap-3-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet">
+    <!-- endbuild -->
 
+    <!-- build:css timerec-app.css -->
     <link href="styles/timerec.css" rel="stylesheet">
-
+    <!-- endbuild -->
 </head>
 
 <body ng-app="timerecApp" ng-cloak>
@@ -49,9 +52,7 @@
     <div ui-view></div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+<!-- build:js vendor.js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/bootstrap-combobox/js/bootstrap-combobox.js"></script>
@@ -59,7 +60,8 @@
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-
+<!-- endbuild -->
+<!-- build:js timerec-app.js -->
 <script src="app/app.module.js"></script>
 <script src="app/app.js"></script>
 <script src="app/common/prependZeroFilter.js"></script>
@@ -71,6 +73,6 @@
 <script src="app/report/reportCtrl.js"></script>
 <script src="app/tasks/editTaskModalCtrl.js"></script>
 <script src="app/tasks/tasksCtrl.js"></script>
-
+<!-- endbuild -->
 </body>
 </html>

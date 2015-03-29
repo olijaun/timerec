@@ -50,34 +50,34 @@
                 for(var i = 0; i < records.length; i++) {
                     var r = records[i];
                     if(!r.day) {
-                        throw "Day must be set";
+                        throw 'Day must be set';
                     }
                     r.day = parseInt(r.day);
                     if(isNaN(r.day)) {
-                        throw "Invalid value for day";
+                        throw 'Invalid value for day';
                     }
                     if(!r.taskId) {
-                        throw "You must select a task";
+                        throw 'You must select a task';
                     }
                     if(!getTasks()[r.taskId]) {
-                        throw "The selected task is not defined";
+                        throw 'The selected task is not defined';
                     }
                     if(r.hour !== 0 && !r.hour) {
-                        throw "Hours must be specified";
+                        throw 'Hours must be specified';
                     }
                     r.hour = parseInt(r.hour);
                     if(isNaN(r.hour)) {
-                        throw "Invalid hour specified";
+                        throw 'Invalid hour specified';
                     }
                     if(r.minute !== 0 && !r.minute) {
-                        throw "Minutes must be specified";
+                        throw 'Minutes must be specified';
                     }
                     r.minute = parseInt(r.minute);
                     if(isNaN(r.minute)) {
-                        throw "Invalid minute specified";
+                        throw 'Invalid minute specified';
                     }
                     if(!isValidDate(parseInt(year), parseInt(month), r.day)) {
-                        throw "You specified an invalid date";
+                        throw 'You specified an invalid date';
                     }
                 }
 
@@ -103,17 +103,17 @@
                 for(var taskKey in tasks) {
                     if(tasks.hasOwnProperty(taskKey)) {
 
-                        if(taskKey === "null" || taskKey === null || taskKey === undefined) {
-                            throw "A task id must be specified";
+                        if(taskKey === 'null' || taskKey === null || taskKey === undefined) {
+                            throw 'A task id must be specified';
                         }
 
                         var task = tasks[taskKey];
 
                         if (!task.name) {
-                            throw "A task name must be specified";
+                            throw 'A task name must be specified';
                         }
                         if (task.selectable === null || task.selectable === undefined) {
-                            throw "You must specify whether this task is selectable or not.";
+                            throw 'You must specify whether this task is selectable or not.';
                         }
                     }
                 }

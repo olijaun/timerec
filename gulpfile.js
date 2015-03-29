@@ -57,7 +57,7 @@ gulp.task('release', ['clean'], function () {
         .pipe($$.uglify())             // Minify all javascript sources
         .pipe(jsFilter.restore())
         .pipe(cssFilter)
-        .pipe($$.minifyCss())          // Minify CSS sources
+        .pipe($$.minifyCss({target: path.join(process.cwd(), 'dist/')}))          // Minify CSS sources
         .pipe(cssFilter.restore())
         .pipe($$.rev())                // Rename the concatenated files with a hash-prefix
         .pipe(assets.restore())
